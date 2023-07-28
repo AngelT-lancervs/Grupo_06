@@ -4,58 +4,85 @@
  */
 package TDAS;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  *
  * @author Grupo06
  */
-public class Trie<E> {
-    
-    private Node<E> root;
-    
-    public Trie(){
+public class Trie {
+
+    private Node<String> root;
+
+    public Trie() {
         this.root = null;
     }
     
-    public boolean isEmpty(){
+    public Trie(String content){
+        this.root = new Node<>(content);
+    }
+    
+    public boolean isEmpty() {
         return this.root == null;
     }
-    
-    public boolean isLeaf(){
+
+    public boolean isLeaf() {
         return this.root.getChildren().isEmpty();
     }
-    
-    public int countLeaves(){
-        return 0;
+
+    public int countLeaves() {
+        if (isEmpty()) {
+            return 0;
+        } else if (isLeaf()) {
+            return 1;
+        } else {
+            int count = 0;
+
+            for(Trie child: this.root.getChildren()){
+                count += child.countLeaves();
+            }
+            return count;
+        }
     }
-    
-    public boolean searchLeave(E content){
+
+    public boolean searchLeave(String word) {
         return false;
     }
-    
-    public void addLeave(E content){
-    
-    }
-    
-    public boolean deleteLeave(E content){
-      return false;  
-    }
-    
-    public List<E> searchPrefix(E content){
-    
-        return null;
-    }
-    
-    public List<E> searchSimilar(E content){
-        return null;
-    }
-    
-    public List<E> searchReverse(E content){
-        return null;
-    }
-    
-    
-    
+
+    public void addLeave(String leave) {
         
+    }
+
+    public boolean deleteLeave(String leave) {
+        return false;
+    }
+
+    public List<String> searchPrefix(String letters) {
+        return null;
+    }
+
+    public List<String> searchSimilar(String word) {
+        return null;
+    }
+
+    public List<String> searchReverse(String letters) {
+        return null;
+    }
+    
+    
+    
+    //MÉTODO PARA PROBAR EL TRIE (BORRAR AL FINAL)
+    public void add(Trie n){
+        if(isEmpty()){
+            this.root = n.root;
+        }else{
+            this.root.getChildren().add(n);
+        }
+    }
+    
+    public Node<String> getRoot(){
+        return this.root;
+    }
+    
 }

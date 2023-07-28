@@ -14,14 +14,13 @@ import java.util.List;
 public class Node<E> {
     
     private E content;
-    private List<Trie<E>> children;
+    private List<Trie> children;
     
     
     public Node(E content){
         this.content = content;
         this.children = new ArrayList<>();
     }
-    
     
     public void setContent(E content){
         this.content = content;
@@ -31,7 +30,7 @@ public class Node<E> {
         return this.content;
     }
     
-    public List<Trie<E>> getChildren(){
+    public List<Trie> getChildren(){
         return this.children;
     }
     

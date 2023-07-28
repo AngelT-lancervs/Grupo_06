@@ -1,5 +1,6 @@
 package general;
 
+import TDAS.Trie;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -32,7 +33,15 @@ public class App extends Application {
     }
 
     public static void main(String[] args) {
-        launch();
+//        launch();
+        Trie arbol = new Trie("");
+        arbol.add(new Trie("o"));
+        arbol.add(new Trie("o"));
+        arbol.add(new Trie("o"));
+        arbol.getRoot().getChildren().get(0).add(new Trie("o"));
+        arbol.add(new Trie("o"));
+
+        System.out.println(arbol.countLeaves());
     }
 
 }
