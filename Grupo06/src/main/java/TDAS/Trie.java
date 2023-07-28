@@ -5,7 +5,10 @@
 package TDAS;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
+import java.util.Stack;
 
 /**
  *
@@ -18,11 +21,11 @@ public class Trie {
     public Trie() {
         this.root = null;
     }
-    
-    public Trie(String content){
+
+    public Trie(String content) {
         this.root = new Node<>(content);
     }
-    
+
     public boolean isEmpty() {
         return this.root == null;
     }
@@ -39,7 +42,7 @@ public class Trie {
         } else {
             int count = 0;
 
-            for(Trie child: this.root.getChildren()){
+            for (Trie child : this.root.getChildren()) {
                 count += child.countLeaves();
             }
             return count;
@@ -47,10 +50,24 @@ public class Trie {
     }
 
     public boolean searchLeave(String word) {
-        return false;
+        if (isEmpty()) {
+            return false;
+        } else if (isLeaf()) {
+            return false;
+        }
+        Trie subTrie = this;
+
+        for (char c : word.toCharArray()) {
+            subTrie = subTrie.root.getChildren().get(c);
+
+            if (subTrie == null) {
+                return false;
+            }
+        }
+        return subTrie.isLeaf();
     }
 
-    public void addLeave(String leave) {
+    public void addLeave(String word) {
         
     }
 
@@ -69,20 +86,21 @@ public class Trie {
     public List<String> searchReverse(String letters) {
         return null;
     }
-    
-    
-    
+
     //MÉTODO PARA PROBAR EL TRIE (BORRAR AL FINAL)
-    public void add(Trie n){
-        if(isEmpty()){
+    
+    //Agrega de forma horizontal al root 
+    public void add(Trie n) {
+        if (isEmpty()) {
             this.root = n.root;
-        }else{
+        } else {
             this.root.getChildren().add(n);
         }
     }
-    
-    public Node<String> getRoot(){
+
+    public Node<String> getRoot() {
         return this.root;
     }
-    
+
+
 }
