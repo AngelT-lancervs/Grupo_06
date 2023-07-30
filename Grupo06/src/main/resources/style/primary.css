@@ -1,0 +1,35 @@
+.text-field {
+    -fx-border-color:  #393E46;
+    -fx-border-radius: 40;
+    -fx-background-color: transparent;
+}
+
+#buttonP{
+    fx-cursor: hand;
+    -fx-padding-top: 10px;
+    -fx-padding-right: 24px;
+    -fx-padding-bottom: 10px;
+    -fx-padding-left: 24px;
+    -fx-font-size: 16px;
+    -fx-text-fill:  #EEEEEE;
+    -fx-border-width: 2px;
+    -fx-background-color: #232931; 
+    -fx-background-radius: 25px;
+    -fx-border-radius: 34px;
+    -fx-transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+#buttonP:hover {
+    -fx-background-color: #393E46;
+    -fx-cursor: hand;
+}
+
+#closeHand:hover{
+    -fx-cursor: hand;
+}
+
+#panebar{
+    -fx-background-color: #D8D9DA;
+    -fx-background-radius: 20;
+}
+
