@@ -35,5 +35,10 @@ public class Node<E> {
     public Map<E, Trie> getChildren(){
         return this.children;
     }
+
+    @Override
+    public String toString() {
+        return "Node{" + "content=" + content + ", children=" + children + '}';
+    }
     
 }

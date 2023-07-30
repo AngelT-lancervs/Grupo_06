@@ -24,7 +24,7 @@ public class Trie {
         this.root = null;
     }
 
-    public Trie(String content) {
+    private Trie(String content) {
         this.root = new Node<>(content);
     }
 
@@ -60,11 +60,11 @@ public class Trie {
             return false;
         }
         Trie subTrie = this;
-        
-        for (int i= 0; i < word.length(); i++) {
+
+        for (char ch : word.toCharArray()) {
 
             Map<String, Trie> children = subTrie.root.getChildren();
-            subTrie = children.get(word.substring(i, i+1));
+            subTrie = children.get(Character.toString(ch));
             System.out.println(subTrie);
             if (subTrie == null) {
                 return false;
@@ -73,18 +73,31 @@ public class Trie {
         return subTrie.isLeaf();
     }
 
-//    public boolean addLeave(String word) {
-//        if (word == null || word.equals("") || word.contains("  ")) {
-//        return false;
-//        }
-//        
-//        Trie current = this;
-//        for(char ch:word.toCharArray()){
-//            if(current.root.getChildren().)
-//        }
-//        
-//
-//    }
+    public boolean addLeave(String word) {
+        if (word == null || word.equals("") || word.contains("  ")) {
+            return false;
+        }if(this.isEmpty()){
+            this.root = new Node("");
+        }
+
+        Trie current = this;
+        for (char ch : word.toCharArray()) {
+            String content = Character.toString(ch);
+            Map<String, Trie> children = current.root.getChildren();
+            current = children.get(content);
+            if (current == null) {
+                Trie newTrie = new Trie(content);
+                children.put(content, newTrie);
+                current = children.get(content);
+
+            }
+            
+        }
+        current.root.setContent(word);
+        return true;
+
+    }
+
     public boolean deleteLeave(String leave) {
         return false;
     }
@@ -164,14 +177,20 @@ public class Trie {
     //Agrega de forma horizontal al root 
     public void add(Trie n) {
         if (isEmpty()) {
-            this.root = n.root;
-        } else {
-            this.root.getChildren().put(n.getRoot().getContent(), n);
+            this.root = new Node("");
         }
+            this.root.getChildren().put(n.getRoot().getContent(), n);
+        
     }
 
     public Node<String> getRoot() {
         return this.root;
     }
+
+    @Override
+    public String toString() {
+        return "Trie{" + "root=" + root + '}';
+    }
+    
 
 }

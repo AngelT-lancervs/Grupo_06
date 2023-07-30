@@ -34,15 +34,17 @@ public class App extends Application {
 
     public static void main(String[] args) {
 //        launch();
-        Trie arbol = new Trie("");
-        arbol.add(new Trie("o"));
-        arbol.add(new Trie("l"));
-        arbol.add(new Trie("a"));
-//        arbol.getRoot().getChildren().get(0).add(new Trie("o"));
-        arbol.add(new Trie("b"));
+        Trie arbol = new Trie();
+//        arbol.add(new Trie("o"));
+//        arbol.add(new Trie("l"));
+//        arbol.add(new Trie("a"));
+////        arbol.getRoot().getChildren().get(0).add(new Trie("o"));
+//        arbol.add(new Trie("b"));
+        
+        arbol.addLeave("casa");
 
         System.out.println(arbol.countLeaves());
-        System.out.println(arbol.searchLeave("b"));
+        System.out.println(arbol.searchLeave("casa"));
         
     }
 
