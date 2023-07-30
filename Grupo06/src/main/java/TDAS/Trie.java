@@ -7,7 +7,9 @@ package TDAS;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Queue;
+import java.util.Set;
 import java.util.Stack;
 
 /**
@@ -40,26 +42,30 @@ public class Trie {
         } else if (isLeaf()) {
             return 1;
         } else {
-            int count = 0;
 
-            for (Trie child : this.root.getChildren()) {
-                count += child.countLeaves();
+            int count = 0;
+            Map<String, Trie> children = this.root.getChildren();
+            Set<String> keys = children.keySet();
+
+            for (String key : keys) {
+                count += children.get(key).countLeaves();
             }
+
             return count;
         }
     }
 
     public boolean searchLeave(String word) {
-        if (isEmpty()) {
-            return false;
-        } else if (isLeaf()) {
+        if (isEmpty() || word.equals("")) {
             return false;
         }
         Trie subTrie = this;
+        
+        for (int i= 0; i < word.length(); i++) {
 
-        for (char c : word.toCharArray()) {
-            subTrie = subTrie.root.getChildren().get(c);
-
+            Map<String, Trie> children = subTrie.root.getChildren();
+            subTrie = children.get(word.substring(i, i+1));
+            System.out.println(subTrie);
             if (subTrie == null) {
                 return false;
             }
@@ -79,7 +85,6 @@ public class Trie {
 //        
 //
 //    }
-
     public boolean deleteLeave(String leave) {
         return false;
     }
@@ -97,9 +102,9 @@ public class Trie {
         List<String> leaves = this.getLeaves();
         List<String> similars = new LinkedList<>();
 
-        for(String leave:leaves){
-            if(Math.abs(leave.length()-word.length())!=0){
-                if(levenshteinAlgorithm(word, leave)<3){
+        for (String leave : leaves) {
+            if (Math.abs(leave.length() - word.length()) != 0) {
+                if (levenshteinAlgorithm(word, leave) < 3) {
                     similars.add(leave);
                 }
             }
@@ -145,10 +150,11 @@ public class Trie {
             leaves.add(this.root.getContent());
             return leaves;
         } else {
-           
+            Map<String, Trie> children = this.root.getChildren();
+            Set<String> keys = children.keySet();
 
-            for (Trie child : this.root.getChildren()) {
-                leaves.addAll(child.getLeaves());
+            for (String key : keys) {
+                leaves.addAll(children.get(key).getLeaves());
             }
             return leaves;
         }
@@ -160,7 +166,7 @@ public class Trie {
         if (isEmpty()) {
             this.root = n.root;
         } else {
-            this.root.getChildren().add(n);
+            this.root.getChildren().put(n.getRoot().getContent(), n);
         }
     }
 

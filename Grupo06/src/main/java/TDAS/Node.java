@@ -5,7 +5,9 @@
 package TDAS;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -14,12 +16,12 @@ import java.util.List;
 public class Node<E> {
     
     private E content;
-    private List<Trie> children;
+    private Map<E, Trie> children;
     
     
     public Node(E content){
         this.content = content;
-        this.children = new ArrayList<>();
+        this.children = new HashMap<>();
     }
     
     public void setContent(E content){
@@ -30,7 +32,7 @@ public class Node<E> {
         return this.content;
     }
     
-    public List<Trie> getChildren(){
+    public Map<E, Trie> getChildren(){
         return this.children;
     }
     

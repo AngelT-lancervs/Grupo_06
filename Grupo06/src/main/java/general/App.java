@@ -36,12 +36,14 @@ public class App extends Application {
 //        launch();
         Trie arbol = new Trie("");
         arbol.add(new Trie("o"));
-        arbol.add(new Trie("o"));
-        arbol.add(new Trie("o"));
-        arbol.getRoot().getChildren().get(0).add(new Trie("o"));
-        arbol.add(new Trie("o"));
+        arbol.add(new Trie("l"));
+        arbol.add(new Trie("a"));
+//        arbol.getRoot().getChildren().get(0).add(new Trie("o"));
+        arbol.add(new Trie("b"));
 
         System.out.println(arbol.countLeaves());
+        System.out.println(arbol.searchLeave("b"));
+        
     }
 
 }
