@@ -35,7 +35,7 @@ public class App extends Application {
     }
 
     public static void main(String[] args) {
-        launch();
+//        launch();
         Trie arbol = new Trie();
 //        arbol.add(new Trie("o"));
 //        arbol.add(new Trie("l"));
@@ -44,6 +44,8 @@ public class App extends Application {
 //        arbol.add(new Trie("b"));
         
         arbol.addLeave("casa");
+        arbol.addLeave("casanoba");
+        arbol.addLeave("cascada");
 
         System.out.println(arbol.countLeaves());
         System.out.println(arbol.searchLeave("casa"));

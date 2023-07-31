@@ -61,39 +61,54 @@ public class Trie {
         }
         Trie subTrie = this;
 
-        for (char ch : word.toCharArray()) {
+        for (int i = 0; i < word.length()-1; i++) {
 
             Map<String, Trie> children = subTrie.root.getChildren();
-            subTrie = children.get(Character.toString(ch));
+            subTrie = children.get(Character.toString(word.charAt(i)));
             System.out.println(subTrie);
             if (subTrie == null) {
                 return false;
             }
         }
-        return subTrie.isLeaf();
+        return subTrie.root.getChildren().get(word)!=null;
     }
 
     public boolean addLeave(String word) {
         if (word == null || word.equals("") || word.contains("  ")) {
             return false;
-        }if(this.isEmpty()){
+        }
+        if (this.isEmpty()) {
             this.root = new Node("");
         }
 
         Trie current = this;
-        for (char ch : word.toCharArray()) {
-            String content = Character.toString(ch);
+        for (int i = 0; i < word.length(); i++) {
+            String content = Character.toString(word.charAt(i));
             Map<String, Trie> children = current.root.getChildren();
-            current = children.get(content);
-            if (current == null) {
-                Trie newTrie = new Trie(content);
-                children.put(content, newTrie);
-                current = children.get(content);
+
+            if (children.get(content) == null) {
+                children.put(content, new Trie(content));
 
             }
-            
+
+            current = children.get(content);
+
+            if (i == (word.length() - 1)) {
+                if (!children.get(content).isLeaf()) {
+                    children.put(word, new Trie(word));
+                } else {
+//                    children.get(content).root.setContent(word);
+                    children.remove(content);
+                    children.put(word, new Trie(word));
+                }
+
+            }
+//            else {
+//                current = children.get(content);
+//            }
+
         }
-        current.root.setContent(word);
+
         return true;
 
     }
@@ -179,8 +194,8 @@ public class Trie {
         if (isEmpty()) {
             this.root = new Node("");
         }
-            this.root.getChildren().put(n.getRoot().getContent(), n);
-        
+        this.root.getChildren().put(n.getRoot().getContent(), n);
+
     }
 
     public Node<String> getRoot() {
@@ -191,6 +206,5 @@ public class Trie {
     public String toString() {
         return "Trie{" + "root=" + root + '}';
     }
-    
 
 }
