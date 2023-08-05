@@ -35,16 +35,18 @@ public class App extends Application {
     }
 
     public static void main(String[] args) {
-//        launch();
         Trie arbol = new Trie();
 
         arbol.addLeave("casa");
         arbol.addLeave("casanoba");
         arbol.addLeave("cascada");
         arbol.addLeave("mateo");
+        arbol.addLeave("mareoq");
         arbol.addLeave("mates");
         arbol.addLeave("martes");
         arbol.addLeave("mateoron");
+        arbol.addLeave("mieroron");
+        arbol.addLeave("marques");
 
         System.out.println(arbol.countLeaves());
         System.out.println(arbol.searchLeave("casa"));
@@ -63,6 +65,19 @@ public class App extends Application {
         System.out.println("search prefix" + arbol.searchByPrefix("casa"));
         System.out.println("search prefix" + arbol.searchByPrefix(""));
         System.out.println("search prefix" + arbol.searchByPrefix("cas"));
+        System.out.println("");
+        System.out.println(arbol.searchReverse("es"));
+        System.out.println(arbol.searchReverse("a"));
+        System.out.println(arbol.searchReverse("oron"));
+        System.out.println(arbol.searchReverse(""));
+        System.out.println(arbol.searchReverse(null));
+        System.out.println(arbol.searchReverse(" "));
+        System.out.println(arbol.searchReverse("yao"));
+        System.out.println("");
+        System.out.println("Similars");
+        System.out.println(arbol.searchSimilar("martes"));
+        System.out.println(arbol.searchSimilar("casa"));
+        launch();
 
     }
 

@@ -3,7 +3,6 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package TDAS;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -80,7 +79,6 @@ public class Trie {
         if (this.isEmpty()) {
             this.root = new Node("");
         }
-
         Trie current = this;
         for (int i = 0; i < word.length(); i++) {
             String content = Character.toString(word.charAt(i));
@@ -106,42 +104,29 @@ public class Trie {
     }
 
     public boolean deleteLeave(String leave) {
-
-        if (this.isEmpty() || !getLeaves().contains(leave)) {
+        if (this.isEmpty() || !searchLeave(leave)) {
             return false;
         }
-
         Trie currentTrie = this;
-
-        
-//        String nextChar=" ";
-        
-        
-        String content ="";
-        
+        String content = "";
         
         for (int i = 0; i < leave.length() - 1; i++) {
             content = Character.toString(leave.charAt(i));
             Map<String, Trie> children = currentTrie.root.getChildren();
-
-            
-            
-            if(children.get(content).getLeaves().size()>1){
+            if (children.get(content).getLeaves().size() > 1) {
                 currentTrie = children.get(content);
-            }else{
-               break;
-            } 
-            
+            } else {
+                break;
+            }
         }
         
-        if(currentTrie.root.getChildren().get(leave)!=null){
+        if (currentTrie.root.getChildren().get(leave) != null) {
             currentTrie.root.getChildren().remove(leave);
             return true;
-        }else{
+        } else {
             currentTrie.root.getChildren().remove(content);
             return true;
         }
-        
 
     }
 
@@ -152,7 +137,6 @@ public class Trie {
         Trie subTrie = this;
 
         for (char ch : prefix.toCharArray()) {
-
             Map<String, Trie> children = subTrie.root.getChildren();
             subTrie = children.get(Character.toString(ch));
             if (subTrie == null) {
@@ -163,10 +147,8 @@ public class Trie {
     }
 
     public List<String> searchSimilar(String word) {
-
-        if (!isValidWord(word)) {
+        if (!isValidWord(word) || this.isEmpty()) {
             return null;
-
         }
         List<String> leaves = this.getLeaves();
         List<String> similars = new LinkedList<>();
@@ -181,8 +163,21 @@ public class Trie {
         return similars;
     }
 
+    //Revisar este metodo ya que no se si esto sea legal
     public List<String> searchReverse(String letters) {
-        return null;
+        if (!isValidWord(letters) || this.isEmpty()) {
+            return null;
+        }
+        List<String> words = getLeaves();
+        List<String> wordsEndWithLetters = new LinkedList<>();
+
+        for (String word : words) {
+            if (word.endsWith(letters)) {
+                wordsEndWithLetters.add(word);
+            }
+        }
+
+        return wordsEndWithLetters;
     }
 
     public static int levenshteinAlgorithm(String word1, String word2) {
@@ -230,54 +225,45 @@ public class Trie {
     }
 
     private boolean isValidWord(String word) {
-        return word != null && !word.equals("") && !word.contains("  ");
+        return word != null && !word.equals("") && !word.contains(" ");
     }
-
-    //MÉTODO PARA PROBAR EL TRIE (BORRAR AL FINAL)
-    //Agrega de forma horizontal al root 
-    public void add(Trie n) {
-        if (isEmpty()) {
-            this.root = new Node("");
+    
+    
+    public List<String> getInitialLetters(){
+        List<String> letters = new LinkedList<>();
+        for(String letter: (String [])this.root.getChildren().keySet().toArray()){
+            letters.add(letter);
         }
-        this.root.getChildren().put(n.getRoot().getContent(), n);
-
-    }
-
-    public Node<String> getRoot() {
-        return this.root;
     }
 
 //    @Override
 //    public String toString() {
 //        return "Trie{" + "root=" + root + ", leaves=" + getLeaves() + '}';
 //    }
-
     @Override
-public String toString() {
-    StringBuilder sb = new StringBuilder();
-    toStringRecursive(root, sb, 0);
-    return sb.toString();
-}
-
-private void toStringRecursive(Node<String> node, StringBuilder sb, int depth) {
-    if (node == null) {
-        return;
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        toStringRecursive(root, sb, 0);
+        return sb.toString();
     }
 
-    for (int i = 0; i < depth; i++) {
-        sb.append("  ");
+    private void toStringRecursive(Node<String> node, StringBuilder sb, int depth) {
+        if (node == null) {
+            return;
+        }
+
+        for (int i = 0; i < depth; i++) {
+            sb.append("  ");
+        }
+
+        sb.append("|-- ");
+        sb.append(node.getContent());
+        sb.append("\n");
+
+        Map<String, Trie> children = node.getChildren();
+        for (Trie childTrie : children.values()) {
+            toStringRecursive(childTrie.root, sb, depth + 1);
+        }
     }
 
-    sb.append("|-- ");
-    sb.append(node.getContent());
-    sb.append("\n");
-
-    Map<String, Trie> children = node.getChildren();
-    for (Trie childTrie : children.values()) {
-        toStringRecursive(childTrie.root, sb, depth + 1);
-    }
-}
-
-    
-    
 }

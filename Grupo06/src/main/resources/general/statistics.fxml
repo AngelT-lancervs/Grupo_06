@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+
+<AnchorPane id="AnchorPane" prefHeight="455.0" prefWidth="699.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/20.0.1" fx:controller="general.StatisticsController">
+   <children>
+      <VBox alignment="TOP_CENTER" prefHeight="455.0" prefWidth="699.0">
+         <children>
+            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="53.0" prefWidth="102.0" text="Estadisticas" />
+            <HBox prefHeight="354.0" prefWidth="646.0">
+               <children>
+                  <VBox prefHeight="200.0" prefWidth="300.0">
+                     <children>
+                        <Label text="Palabras almacenadas" />
+                        <Label fx:id="lbTotalWords" prefHeight="18.0" prefWidth="39.0" text="00000" />
+                        <Label text="Palabra mas larga" />
+                        <Label fx:id="lbLongerWord" text="Palabra" />
+                        <Label text="Palabra mas corta" />
+                        <Label fx:id="lbShorterword" text="Palabra" />
+                        <HBox prefHeight="31.0" prefWidth="235.0">
+                           <children>
+                              <Label text="Cantidad de palabras por letra" />
+                              <ChoiceBox fx:id="chLetters1" prefHeight="26.0" prefWidth="44.0" />
+                           </children>
+                        </HBox>
+                        <Label fx:id="lbTotalWordPerLetter" text="00000" />
+                        <HBox prefHeight="27.0" prefWidth="235.0">
+                           <children>
+                              <Label text="Frecuencia de letras" />
+                              <ChoiceBox fx:id="chLetters2" prefHeight="26.0" prefWidth="44.0" />
+                           </children>
+                        </HBox>
+                        <Label fx:id="lbLetterFrequency" text="00000" />
+                        <Label text="Ultima palabra agregada" />
+                        <Label fx:id="lbLastWordAdded" text="Palabra" />
+                     </children>
+                  </VBox>
+                  <BarChart fx:id="barChart" prefHeight="346.0" prefWidth="529.0" title="Histograma de Longitudes de Palabras">
+                    <xAxis>
+                      <CategoryAxis label="Longitud" prefHeight="31.0" prefWidth="389.0" side="BOTTOM" fx:id="xAxis" />
+                    </xAxis>
+                    <yAxis>
+                      <NumberAxis label="frecuencia" prefHeight="264.0" prefWidth="45.0" side="LEFT" />
+                    </yAxis>
+                  </BarChart>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>
