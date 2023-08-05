@@ -5,6 +5,7 @@
 package TDAS;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -56,25 +57,24 @@ public class Trie {
     }
 
     public boolean searchLeave(String word) {
-        if (isEmpty() || word.equals("")) {
+        if (!isValidWord(word) || this.isEmpty()) {
             return false;
         }
         Trie subTrie = this;
 
-        for (int i = 0; i < word.length()-1; i++) {
+        for (int i = 0; i < word.length() - 1; i++) {
 
             Map<String, Trie> children = subTrie.root.getChildren();
             subTrie = children.get(Character.toString(word.charAt(i)));
-            System.out.println(subTrie);
             if (subTrie == null) {
                 return false;
             }
         }
-        return subTrie.root.getChildren().get(word)!=null;
+        return subTrie.root.getChildren().get(word) != null;
     }
 
     public boolean addLeave(String word) {
-        if (word == null || word.equals("") || word.contains("  ")) {
+        if (!isValidWord(word)) {
             return false;
         }
         if (this.isEmpty()) {
@@ -88,25 +88,17 @@ public class Trie {
 
             if (children.get(content) == null) {
                 children.put(content, new Trie(content));
-
             }
-
             current = children.get(content);
 
             if (i == (word.length() - 1)) {
                 if (!children.get(content).isLeaf()) {
                     children.put(word, new Trie(word));
                 } else {
-//                    children.get(content).root.setContent(word);
                     children.remove(content);
                     children.put(word, new Trie(word));
                 }
-
             }
-//            else {
-//                current = children.get(content);
-//            }
-
         }
 
         return true;
@@ -114,16 +106,65 @@ public class Trie {
     }
 
     public boolean deleteLeave(String leave) {
-        return false;
+
+        if (this.isEmpty() || !getLeaves().contains(leave)) {
+            return false;
+        }
+
+        Trie currentTrie = this;
+
+        
+//        String nextChar=" ";
+        
+        
+        String content ="";
+        
+        
+        for (int i = 0; i < leave.length() - 1; i++) {
+            content = Character.toString(leave.charAt(i));
+            Map<String, Trie> children = currentTrie.root.getChildren();
+
+            
+            
+            if(children.get(content).getLeaves().size()>1){
+                currentTrie = children.get(content);
+            }else{
+               break;
+            } 
+            
+        }
+        
+        if(currentTrie.root.getChildren().get(leave)!=null){
+            currentTrie.root.getChildren().remove(leave);
+            return true;
+        }else{
+            currentTrie.root.getChildren().remove(content);
+            return true;
+        }
+        
+
     }
 
-    public List<String> searchPrefix(String letters) {
-        return null;
+    public List<String> searchByPrefix(String prefix) {
+        if (!isValidWord(prefix) || this.isEmpty()) {
+            return null;
+        }
+        Trie subTrie = this;
+
+        for (char ch : prefix.toCharArray()) {
+
+            Map<String, Trie> children = subTrie.root.getChildren();
+            subTrie = children.get(Character.toString(ch));
+            if (subTrie == null) {
+                return null;
+            }
+        }
+        return subTrie.getLeaves();
     }
 
     public List<String> searchSimilar(String word) {
 
-        if (word == null || word.equals("") || word.contains("  ")) {
+        if (!isValidWord(word)) {
             return null;
 
         }
@@ -188,6 +229,10 @@ public class Trie {
         }
     }
 
+    private boolean isValidWord(String word) {
+        return word != null && !word.equals("") && !word.contains("  ");
+    }
+
     //MÉTODO PARA PROBAR EL TRIE (BORRAR AL FINAL)
     //Agrega de forma horizontal al root 
     public void add(Trie n) {
@@ -202,9 +247,37 @@ public class Trie {
         return this.root;
     }
 
+//    @Override
+//    public String toString() {
+//        return "Trie{" + "root=" + root + ", leaves=" + getLeaves() + '}';
+//    }
+
     @Override
-    public String toString() {
-        return "Trie{" + "root=" + root + '}';
+public String toString() {
+    StringBuilder sb = new StringBuilder();
+    toStringRecursive(root, sb, 0);
+    return sb.toString();
+}
+
+private void toStringRecursive(Node<String> node, StringBuilder sb, int depth) {
+    if (node == null) {
+        return;
     }
 
+    for (int i = 0; i < depth; i++) {
+        sb.append("  ");
+    }
+
+    sb.append("|-- ");
+    sb.append(node.getContent());
+    sb.append("\n");
+
+    Map<String, Trie> children = node.getChildren();
+    for (Trie childTrie : children.values()) {
+        toStringRecursive(childTrie.root, sb, depth + 1);
+    }
+}
+
+    
+    
 }
