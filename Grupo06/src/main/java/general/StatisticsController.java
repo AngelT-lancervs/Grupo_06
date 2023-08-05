@@ -4,14 +4,22 @@
  */
 package general;
 
+import TDAS.Trie;
+import java.io.IOException;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.control.Label;
 import javafx.scene.chart.BarChart;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.ChoiceBox;
+import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -20,10 +28,8 @@ import javafx.scene.control.ChoiceBox;
  */
 public class StatisticsController implements Initializable {
 
-    
-    
     @FXML
-    private BarChart<Integer, Integer> barChart;
+    private BarChart<String, Integer> barChart;
 
     @FXML
     private ChoiceBox<String> chLetters1;
@@ -51,13 +57,52 @@ public class StatisticsController implements Initializable {
 
     @FXML
     private CategoryAxis xAxis;
-    
+
+    private final Trie currentTrie = DiccionaryController.diccionary;
+
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-    }    
-    
+
+        barChart.getData().add(generateDataSeries(currentTrie.getAllLeavesLevels()));
+        lbTotalWords.setText(Integer.toString(currentTrie.countLeaves()));
+        chLetters1.getItems().addAll(currentTrie.getInitialLetters());
+        chLetters2.getItems().addAll(currentTrie.getInitialLetters());
+        chLetters1.setOnAction(e-> updateTotalWordPerLetter(chLetters1.getValue()));
+        chLetters2.setOnAction(e-> updateLetterFrequency(chLetters2.getValue()));
+    }
+
+    @FXML
+    private void closeWindow() {
+        Stage stage = (Stage) barChart.getScene().getWindow();
+        stage.close();
+    }
+
+    private XYChart.Series<String, Integer> generateDataSeries(List<Integer> list) {
+        Map<Integer, Integer> histogram = new HashMap<>();
+
+        for (Integer leaveLevels : list) {
+            histogram.put(leaveLevels, histogram.getOrDefault(leaveLevels, 0) + 1);
+        }
+
+        XYChart.Series<String, Integer> dataSeries = new XYChart.Series<>();
+        for (Map.Entry<Integer, Integer> entry : histogram.entrySet()) {
+            dataSeries.getData().add(new XYChart.Data<>(entry.getKey().toString(), entry.getValue()));
+        }
+        return dataSeries;
+    }
+
+    private void updateTotalWordPerLetter(String value) {
+         Map<String, Trie> children = currentTrie.getChildren();
+         lbTotalWordPerLetter.setText(Integer.toString(children.get(value).countLeaves()));
+
+    }
+
+    private void updateLetterFrequency(String value) {
+         lbLetterFrequency.setText(Integer.toString(currentTrie.countLetter(value)));
+    }
+
 }

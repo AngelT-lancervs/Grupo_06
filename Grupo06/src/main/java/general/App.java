@@ -19,7 +19,7 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        scene = new Scene(loadFXML("primary"), 900, 500);
+        scene = new Scene(loadFXML("diccionary"), 900, 500);
         stage.initStyle(StageStyle.UNDECORATED);
         stage.setScene(scene);
         stage.show();
@@ -77,6 +77,14 @@ public class App extends Application {
         System.out.println("Similars");
         System.out.println(arbol.searchSimilar("martes"));
         System.out.println(arbol.searchSimilar("casa"));
+        
+        
+        System.out.println("");
+        System.out.println(arbol.getAllLeavesLevels());
+        
+        System.out.println(arbol.countLetter("c"));
+        
+        DiccionaryController.diccionary=arbol;
         launch();
 
     }

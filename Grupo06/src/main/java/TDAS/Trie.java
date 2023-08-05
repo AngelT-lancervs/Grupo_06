@@ -3,7 +3,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package TDAS;
+
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -36,6 +38,10 @@ public class Trie {
         return this.root.getChildren().isEmpty();
     }
 
+    public Map<String, Trie> getChildren() {
+        return root.getChildren();
+    }
+
     public int countLeaves() {
         if (isEmpty()) {
             return 0;
@@ -53,6 +59,24 @@ public class Trie {
 
             return count;
         }
+    }
+
+    public int countLetter(String letter) {
+        if (isEmpty()) {
+            return 0;
+        }
+
+        int count = 0;
+        if (this.root.getContent().equals(letter)) {
+            count+=this.countLeaves();
+        }
+
+        Map<String, Trie> children = this.root.getChildren();
+        for (Trie childTrie : children.values()) {
+            count += childTrie.countLetter(letter);
+        }
+
+        return count;
     }
 
     public boolean searchLeave(String word) {
@@ -109,7 +133,7 @@ public class Trie {
         }
         Trie currentTrie = this;
         String content = "";
-        
+
         for (int i = 0; i < leave.length() - 1; i++) {
             content = Character.toString(leave.charAt(i));
             Map<String, Trie> children = currentTrie.root.getChildren();
@@ -119,7 +143,7 @@ public class Trie {
                 break;
             }
         }
-        
+
         if (currentTrie.root.getChildren().get(leave) != null) {
             currentTrie.root.getChildren().remove(leave);
             return true;
@@ -224,16 +248,45 @@ public class Trie {
         }
     }
 
+    public List<Integer> getAllLeavesLevels() {
+        if (this.isEmpty()) {
+            return null;
+        }
+
+        return getAllLeavesLevelsRecursive(0);
+    }
+
+    private List<Integer> getAllLeavesLevelsRecursive(int i) {
+        List<Integer> list = new LinkedList<>();
+        if (this.isEmpty()) {
+            return null;
+        }
+        if (this.isLeaf()) {
+            list.add(i);
+
+            return list;
+        }
+        Map<String, Trie> children = this.root.getChildren();
+        Set<String> keys = children.keySet();
+
+        for (String key : keys) {
+            list.addAll(children.get(key).getAllLeavesLevelsRecursive(i + 1));
+        }
+        return list;
+
+    }
+
     private boolean isValidWord(String word) {
         return word != null && !word.equals("") && !word.contains(" ");
     }
-    
-    
-    public List<String> getInitialLetters(){
-        List<String> letters = new LinkedList<>();
-        for(String letter: (String [])this.root.getChildren().keySet().toArray()){
-            letters.add(letter);
+
+    public List<String> getInitialLetters() {
+        if (this.isEmpty() && this.isLeaf()) {
+            return null;
         }
+        List<String> letters = new LinkedList<>();
+        letters.addAll(this.root.getChildren().keySet());
+        return letters;
     }
 
 //    @Override
