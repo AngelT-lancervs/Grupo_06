@@ -13,13 +13,13 @@ import java.util.Map;
  *
  * @author Grupo06
  */
-public class Node<E> {
+public class TrieNode<E> {
     
     private E content;
     private Map<E, Trie> children;
     
     
-    public Node(E content){
+    public TrieNode(E content){
         this.content = content;
         this.children = new HashMap<>();
     }

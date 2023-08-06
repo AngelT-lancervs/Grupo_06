@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.chart.BarChart?>
 <?import javafx.scene.chart.CategoryAxis?>
 <?import javafx.scene.chart.NumberAxis?>
@@ -17,13 +18,16 @@
             <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="53.0" prefWidth="102.0" text="Estadisticas" />
             <HBox prefHeight="354.0" prefWidth="646.0">
                <children>
-                  <VBox prefHeight="200.0" prefWidth="300.0">
+                  <VBox prefHeight="200.0" prefWidth="300.0" spacing="10.0">
                      <children>
                         <Label text="Palabras almacenadas" />
                         <Label fx:id="lbTotalWords" prefHeight="18.0" prefWidth="39.0" text="00000" />
                         <Label text="Palabra mas larga" />
                         <Label fx:id="lbLongerWord" text="Palabra" />
-                        <Label text="Palabra mas corta" />
+                        <Label text="Palabra mas corta">
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin></Label>
                         <Label fx:id="lbShorterword" text="Palabra" />
                         <HBox prefHeight="31.0" prefWidth="235.0">
                            <children>
@@ -42,13 +46,19 @@
                         <Label text="Ultima palabra agregada" />
                         <Label fx:id="lbLastWordAdded" text="Palabra" />
                      </children>
+                     <padding>
+                        <Insets left="15.0" />
+                     </padding>
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
                   </VBox>
                   <BarChart fx:id="barChart" prefHeight="346.0" prefWidth="529.0" title="Histograma de Longitudes de Palabras">
                     <xAxis>
                       <CategoryAxis label="Longitud" prefHeight="31.0" prefWidth="389.0" side="BOTTOM" fx:id="xAxis" />
                     </xAxis>
                     <yAxis>
-                      <NumberAxis label="frecuencia" prefHeight="264.0" prefWidth="45.0" side="LEFT" />
+                      <NumberAxis label="Frecuencia" prefHeight="264.0" prefWidth="45.0" side="LEFT" />
                     </yAxis>
                   </BarChart>
                </children>

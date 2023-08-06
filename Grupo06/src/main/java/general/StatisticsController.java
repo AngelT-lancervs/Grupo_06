@@ -4,10 +4,12 @@
  */
 package general;
 
+import TDAS.Tree;
 import TDAS.Trie;
 import java.io.IOException;
 import java.net.URL;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -69,10 +71,31 @@ public class StatisticsController implements Initializable {
 
         barChart.getData().add(generateDataSeries(currentTrie.getAllLeavesLevels()));
         lbTotalWords.setText(Integer.toString(currentTrie.countLeaves()));
-        chLetters1.getItems().addAll(currentTrie.getInitialLetters());
-        chLetters2.getItems().addAll(currentTrie.getInitialLetters());
-        chLetters1.setOnAction(e-> updateTotalWordPerLetter(chLetters1.getValue()));
-        chLetters2.setOnAction(e-> updateLetterFrequency(chLetters2.getValue()));
+        chLetters1.getItems().addAll(getInitialLetters(currentTrie));
+        chLetters2.getItems().addAll(getInitialLetters(currentTrie));
+        chLetters1.setOnAction(e -> updateTotalWordPerLetter(chLetters1.getValue()));
+        chLetters2.setOnAction(e -> updateLetterFrequency(chLetters2.getValue()));
+        lbLongerWord.setText(currentTrie.getLeavesAtLevel(currentTrie.countLevel()).toString());
+
+        lbShorterword.setText(currentTrie.getLeavesAtLevel(findMinLevel(currentTrie)).toString());
+    }
+
+    private int findMinLevel(Trie trie) {
+        if (trie.isEmpty()) {
+            return Integer.MAX_VALUE;
+        }
+
+        if (trie.getChildren().isEmpty()) {
+            return 0;
+        }
+
+        int minChildLevel = Integer.MAX_VALUE;
+        for (Trie child : trie.getChildren().values()) {
+            int childLevel = findMinLevel(child) + 1;
+            minChildLevel = Math.min(minChildLevel, childLevel);
+        }
+
+        return minChildLevel;
     }
 
     @FXML
@@ -96,13 +119,22 @@ public class StatisticsController implements Initializable {
     }
 
     private void updateTotalWordPerLetter(String value) {
-         Map<String, Trie> children = currentTrie.getChildren();
-         lbTotalWordPerLetter.setText(Integer.toString(children.get(value).countLeaves()));
+        Map<String, Trie> children = currentTrie.getChildren();
+        lbTotalWordPerLetter.setText(Integer.toString(children.get(value).countLeaves()));
 
     }
 
     private void updateLetterFrequency(String value) {
-         lbLetterFrequency.setText(Integer.toString(currentTrie.countLetter(value)));
+        lbLetterFrequency.setText(Integer.toString(currentTrie.countLetter(value)));
+    }
+
+    private List<String> getInitialLetters(Trie trie) {
+        if (trie.isEmpty() && trie.isLeaf()) {
+            return null;
+        }
+        List<String> letters = new LinkedList<>();
+        letters.addAll(trie.getChildren().keySet());
+        return letters;
     }
 
 }

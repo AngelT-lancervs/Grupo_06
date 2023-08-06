@@ -37,25 +37,25 @@ public class App extends Application {
     public static void main(String[] args) {
         Trie arbol = new Trie();
 
-        arbol.addLeave("casa");
-        arbol.addLeave("casanoba");
-        arbol.addLeave("cascada");
-        arbol.addLeave("mateo");
-        arbol.addLeave("mareoq");
-        arbol.addLeave("mates");
-        arbol.addLeave("martes");
-        arbol.addLeave("mateoron");
-        arbol.addLeave("mieroron");
-        arbol.addLeave("marques");
+        arbol.add("casa");
+        arbol.add("casanoba");
+        arbol.add("cascada");
+        arbol.add("mateo");
+        arbol.add("mareoq");
+        arbol.add("mates");
+        arbol.add("martes");
+        arbol.add("mateoron");
+        arbol.add("mieroron");
+        arbol.add("marques");
 
         System.out.println(arbol.countLeaves());
-        System.out.println(arbol.searchLeave("casa"));
+        System.out.println(arbol.search("casa"));
 
         System.out.println(arbol.getLeaves());
 
         System.out.println(arbol);
 
-        System.out.println(arbol.deleteLeave("mates"));
+        System.out.println(arbol.remove("mates"));
         System.out.println(arbol.getLeaves());
 
         System.out.println(arbol);
@@ -85,8 +85,15 @@ public class App extends Application {
         System.out.println(arbol.countLetter("c"));
         
         DiccionaryController.diccionary=arbol;
+        
+        System.out.println(arbol.countLevel());
+        
+        
+        System.out.println(arbol.getLeavesAtLevel(4));
         launch();
 
+        
+        
     }
 
 }

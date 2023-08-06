@@ -18,22 +18,24 @@ import java.util.Stack;
  *
  * @author Grupo06
  */
-public class Trie {
+public class Trie implements Tree<String> {
 
-    private Node<String> root;
+    private TrieNode<String> root;
 
     public Trie() {
         this.root = null;
     }
 
     private Trie(String content) {
-        this.root = new Node<>(content);
+        this.root = new TrieNode<>(content);
     }
 
+    @Override
     public boolean isEmpty() {
         return this.root == null;
     }
 
+    @Override
     public boolean isLeaf() {
         return this.root.getChildren().isEmpty();
     }
@@ -68,7 +70,7 @@ public class Trie {
 
         int count = 0;
         if (this.root.getContent().equals(letter)) {
-            count+=this.countLeaves();
+            count += this.countLeaves();
         }
 
         Map<String, Trie> children = this.root.getChildren();
@@ -79,7 +81,8 @@ public class Trie {
         return count;
     }
 
-    public boolean searchLeave(String word) {
+    @Override
+    public boolean search(String word) {
         if (!isValidWord(word) || this.isEmpty()) {
             return false;
         }
@@ -96,12 +99,13 @@ public class Trie {
         return subTrie.root.getChildren().get(word) != null;
     }
 
-    public boolean addLeave(String word) {
+    @Override
+    public boolean add(String word) {
         if (!isValidWord(word)) {
             return false;
         }
         if (this.isEmpty()) {
-            this.root = new Node("");
+            this.root = new TrieNode("");
         }
         Trie current = this;
         for (int i = 0; i < word.length(); i++) {
@@ -127,8 +131,9 @@ public class Trie {
 
     }
 
-    public boolean deleteLeave(String leave) {
-        if (this.isEmpty() || !searchLeave(leave)) {
+    @Override
+    public boolean remove(String leave) {
+        if (this.isEmpty() || !search(leave)) {
             return false;
         }
         Trie currentTrie = this;
@@ -204,7 +209,7 @@ public class Trie {
         return wordsEndWithLetters;
     }
 
-    public static int levenshteinAlgorithm(String word1, String word2) {
+    private static int levenshteinAlgorithm(String word1, String word2) {
         int m = word1.length();
         int n = word2.length();
 
@@ -280,15 +285,6 @@ public class Trie {
         return word != null && !word.equals("") && !word.contains(" ");
     }
 
-    public List<String> getInitialLetters() {
-        if (this.isEmpty() && this.isLeaf()) {
-            return null;
-        }
-        List<String> letters = new LinkedList<>();
-        letters.addAll(this.root.getChildren().keySet());
-        return letters;
-    }
-
 //    @Override
 //    public String toString() {
 //        return "Trie{" + "root=" + root + ", leaves=" + getLeaves() + '}';
@@ -300,7 +296,7 @@ public class Trie {
         return sb.toString();
     }
 
-    private void toStringRecursive(Node<String> node, StringBuilder sb, int depth) {
+    private void toStringRecursive(TrieNode<String> node, StringBuilder sb, int depth) {
         if (node == null) {
             return;
         }
@@ -317,6 +313,40 @@ public class Trie {
         for (Trie childTrie : children.values()) {
             toStringRecursive(childTrie.root, sb, depth + 1);
         }
+    }
+
+    public List<String> getLeavesAtLevel(int level) {
+        List<String> list = new LinkedList<>();
+        if (this.isEmpty()) {
+            return null;
+
+        }
+        if (level == 0&& this.isLeaf()) {
+            list.add(this.root.getContent());
+            return list;
+        }
+        
+        for(Trie childTrie: this.getChildren().values()){
+            list.addAll(childTrie.getLeavesAtLevel(level-1));
+        }
+        return list;
+        
+    }
+
+    @Override
+    public int countLevel() {
+        if (this.isEmpty()) {
+            return 0;
+        }
+
+        int maxChildLevel = 0;
+        for (Trie child : this.getChildren().values()) {
+            int childLevel = child.countLevel() + 1;
+            maxChildLevel = Math.max(maxChildLevel, childLevel);
+        }
+
+        return maxChildLevel;
+
     }
 
 }
