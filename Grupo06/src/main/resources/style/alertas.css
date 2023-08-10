@@ -1,0 +1,59 @@
+.button{
+    -fx-text-fill: #b2b2b2;
+    -fx-background-color: #212a3e;
+    -fx-border-color: transparent;
+    -fx-border-radius: 20px;
+    -fx-background-radius: 20px;
+    -fx-font-size: 12pt;
+    -fx-cursor: hand;
+    -fx-font-weight: bold;
+}
+.button:hover, .button:focused{
+    -fx-border-color: transparent;
+    -fx-background-color: #212a3e;
+    -fx-text-fill: #d4fcf6;
+}
+/*Dialog styling*/
+.dialog-button{
+    -fx-border-color: #212a3e;
+    -fx-text-fill: white;
+    -fx-border-radius: 1px;
+    -fx-background-radius: 3px;
+}
+
+.dialog-button:hover{
+    -fx-background-color: #1976d2;
+    -fx-border-color: #212a3e;
+    -fx-text-fill: white;
+}
+
+.jfx-layout-actions
+{
+    -fx-hgap:8;
+}
+/*Alerts*/
+.custom-alert{
+    -fx-background-color: white;
+    -fx-text-fill: black;
+}
+.custom-alert > *.button-bar > *.container{
+    -fx-background-color: white;
+}
+.custom-alert > *.label.content{
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: black;
+}
+.custom-alert:header *.header-panel{
+    -fx-background-color: white;
+}
+.custom-alert:header  .header-panel .label {
+    -fx-font-style: normal;
+    -fx-text-fill: black;
+}
+.custom-alert:header *.header-panel *.label{
+    -fx-font-size: 18px;
+    -fx-font-style: italic;
+    -fx-fill: #d4fcf6;
+}
+

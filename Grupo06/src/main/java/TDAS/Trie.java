@@ -4,6 +4,7 @@
  */
 package TDAS;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -18,7 +19,7 @@ import java.util.Stack;
  *
  * @author Grupo06
  */
-public class Trie implements Tree<String> {
+public class Trie implements Tree<String>,Serializable {
 
     private TrieNode<String> root;
 
@@ -253,7 +254,7 @@ public class Trie implements Tree<String> {
         }
     }
 
-    public List<Integer> getAllLeavesLevels() {
+    public List<Integer> getLeavesLevels() {
         if (this.isEmpty()) {
             return null;
         }
@@ -315,7 +316,7 @@ public class Trie implements Tree<String> {
         }
     }
 
-    public List<String> getLeavesAtLevel(int level) {
+    public List<String> getLeavesByLevel(int level) {
         List<String> list = new LinkedList<>();
         if (this.isEmpty()) {
             return null;
@@ -327,7 +328,7 @@ public class Trie implements Tree<String> {
         }
         
         for(Trie childTrie: this.getChildren().values()){
-            list.addAll(childTrie.getLeavesAtLevel(level-1));
+            list.addAll(childTrie.getLeavesByLevel(level-1));
         }
         return list;
         
@@ -348,5 +349,6 @@ public class Trie implements Tree<String> {
         return maxChildLevel;
 
     }
+
 
 }

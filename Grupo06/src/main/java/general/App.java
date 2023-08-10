@@ -9,6 +9,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import javafx.stage.StageStyle;
+import utils.trieSerialization;
 
 /**
  * JavaFX App
@@ -19,7 +20,7 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        scene = new Scene(loadFXML("diccionary"), 900, 500);
+        scene = new Scene(loadFXML("dictionary"), 900, 500);
         stage.initStyle(StageStyle.UNDECORATED);
         stage.setScene(scene);
         stage.show();
@@ -35,65 +36,33 @@ public class App extends Application {
     }
 
     public static void main(String[] args) {
-        Trie arbol = new Trie();
+        if (trieSerialization.unserialize("dictionary") == null) {
+            DictionaryController.dictionary = createDefaultDictionary();
+        }else{
+            DictionaryController.dictionary= (Trie) trieSerialization.unserialize("dictionary");
+        }
 
-        arbol.add("casa");
-        arbol.add("casanoba");
-        arbol.add("cascada");
-        arbol.add("mateo");
-        arbol.add("mareoq");
-        arbol.add("mates");
-        arbol.add("martes");
-        arbol.add("mateoron");
-        arbol.add("mieroron");
-        arbol.add("marques");
-
-        System.out.println(arbol.countLeaves());
-        System.out.println(arbol.search("casa"));
-
-        System.out.println(arbol.getLeaves());
-
-        System.out.println(arbol);
-
-        System.out.println(arbol.remove("mates"));
-        System.out.println(arbol.getLeaves());
-
-        System.out.println(arbol);
-
-        System.out.println("search prefix" + arbol.searchByPrefix("ma"));
-        System.out.println("search prefix" + arbol.searchByPrefix("a"));
-        System.out.println("search prefix" + arbol.searchByPrefix("casa"));
-        System.out.println("search prefix" + arbol.searchByPrefix(""));
-        System.out.println("search prefix" + arbol.searchByPrefix("cas"));
-        System.out.println("");
-        System.out.println(arbol.searchReverse("es"));
-        System.out.println(arbol.searchReverse("a"));
-        System.out.println(arbol.searchReverse("oron"));
-        System.out.println(arbol.searchReverse(""));
-        System.out.println(arbol.searchReverse(null));
-        System.out.println(arbol.searchReverse(" "));
-        System.out.println(arbol.searchReverse("yao"));
-        System.out.println("");
-        System.out.println("Similars");
-        System.out.println(arbol.searchSimilar("martes"));
-        System.out.println(arbol.searchSimilar("casa"));
-        
-        
-        System.out.println("");
-        System.out.println(arbol.getAllLeavesLevels());
-        
-        System.out.println(arbol.countLetter("c"));
-        
-        DiccionaryController.diccionary=arbol;
-        
-        System.out.println(arbol.countLevel());
-        
-        
-        System.out.println(arbol.getLeavesAtLevel(4));
         launch();
 
-        
-        
+    }
+
+    private static Trie createDefaultDictionary() {
+        Trie arbol = new Trie();
+
+        arbol.add("ESPOL");
+        arbol.add("estructura");
+        arbol.add("datos");
+        arbol.add("exes");
+        arbol.add("árbol");
+        arbol.add("diccionario");
+        arbol.add("hermana");
+        arbol.add("de");
+        arbol.add("gorra");
+        arbol.add("atención");
+        arbol.add("plena");
+
+        return arbol;
+
     }
 
 }

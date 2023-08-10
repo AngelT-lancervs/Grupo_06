@@ -4,6 +4,7 @@
  */
 package TDAS;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -13,7 +14,7 @@ import java.util.Map;
  *
  * @author Grupo06
  */
-public class TrieNode<E> {
+public class TrieNode<E> implements Serializable{
     
     private E content;
     private Map<E, Trie> children;

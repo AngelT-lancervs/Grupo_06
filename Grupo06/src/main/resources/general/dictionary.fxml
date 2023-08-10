@@ -2,18 +2,27 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="900.0" style="-fx-background-color: #EEEEEE;" stylesheets="@../style/primary.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="general.DiccionaryController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="900.0" style="-fx-background-color: #EEEEEE;" stylesheets="@../style/primary.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="general.DictionaryController">
    <children>
-      <Pane layoutX="29.0" layoutY="79.0" prefHeight="343.0" prefWidth="383.0" style="-fx-border-color: black;" />
-      <TextField layoutX="456.0" layoutY="226.0" prefHeight="49.0" prefWidth="414.0" style="-fx-border-color: #393E46;" />
-      <ImageView id="closeHand" fitHeight="30.0" fitWidth="30.0" layoutX="821.0" layoutY="236.0" pickOnBounds="true" preserveRatio="true">
+      <Pane layoutX="29.0" layoutY="79.0" prefHeight="343.0" prefWidth="383.0" style="-fx-border-color: black;">
+         <children>
+            <ScrollPane layoutX="2.0" layoutY="2.0" prefHeight="338.0" prefWidth="378.0">
+               <content>
+                  <VBox fx:id="vbContent" prefHeight="332.0" prefWidth="366.0" />
+               </content>
+            </ScrollPane>
+         </children></Pane>
+      <TextField fx:id="tfSearch" layoutX="456.0" layoutY="226.0" prefHeight="49.0" prefWidth="414.0" style="-fx-border-color: #393E46;" />
+      <ImageView id="closeHand" fitHeight="30.0" fitWidth="30.0" layoutX="821.0" layoutY="236.0" onMouseClicked="#searchWord" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../images/searchIcon.png" />
          </image>
@@ -23,12 +32,12 @@
             <Font name="Berlin Sans FB Bold" size="36.0" />
          </font>
       </Label>
-      <Button id="buttonP" layoutX="509.0" layoutY="306.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="104.0" text="Ingresar">
+      <Button id="buttonP" layoutX="509.0" layoutY="306.0" mnemonicParsing="false" onAction="#addWord" prefHeight="40.0" prefWidth="104.0" text="Agregar">
          <font>
             <Font name="Berlin Sans FB" size="12.0" />
          </font>
       </Button>
-      <Button id="buttonP" layoutX="714.0" layoutY="306.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="104.0" text="Eliminar">
+      <Button id="buttonP" layoutX="714.0" layoutY="306.0" mnemonicParsing="false" onAction="#deleteWord" prefHeight="40.0" prefWidth="104.0" text="Eliminar">
          <font>
             <Font name="Berlin Sans FB" size="12.0" />
          </font>
@@ -40,17 +49,17 @@
       </Label>
       <Pane id="panebar" layoutX="442.0" layoutY="437.0" prefHeight="49.0" prefWidth="442.0">
          <children>
-            <ImageView fitHeight="40.0" fitWidth="38.0" layoutX="381.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView id="closeHand" fitHeight="40.0" fitWidth="38.0" layoutX="381.0" layoutY="5.0" onMouseClicked="#downloadWords" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../images/downloadIcon.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="40.0" fitWidth="38.0" layoutX="202.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView id="closeHand" fitHeight="40.0" fitWidth="38.0" layoutX="202.0" layoutY="5.0" onMouseClicked="#uploadWords" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../images/carryIcon.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="40.0" fitWidth="38.0" layoutX="34.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView id="closeHand" fitHeight="40.0" fitWidth="38.0" layoutX="34.0" layoutY="5.0" onMouseClicked="#playGame" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../images/gameIcon.png" />
                </image>

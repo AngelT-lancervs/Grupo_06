@@ -60,24 +60,26 @@ public class StatisticsController implements Initializable {
     @FXML
     private CategoryAxis xAxis;
 
-    private final Trie currentTrie = DiccionaryController.diccionary;
+    private final Trie currentTrie = DictionaryController.dictionary;
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        
 
-        barChart.getData().add(generateDataSeries(currentTrie.getAllLeavesLevels()));
+        barChart.getData().add(generateDataSeries(currentTrie.getLeavesLevels()));
         lbTotalWords.setText(Integer.toString(currentTrie.countLeaves()));
         chLetters1.getItems().addAll(getInitialLetters(currentTrie));
         chLetters2.getItems().addAll(getInitialLetters(currentTrie));
         chLetters1.setOnAction(e -> updateTotalWordPerLetter(chLetters1.getValue()));
         chLetters2.setOnAction(e -> updateLetterFrequency(chLetters2.getValue()));
-        lbLongerWord.setText(currentTrie.getLeavesAtLevel(currentTrie.countLevel()).toString());
+        lbLongerWord.setText(currentTrie.getLeavesByLevel(currentTrie.countLevel()).toString());
 
-        lbShorterword.setText(currentTrie.getLeavesAtLevel(findMinLevel(currentTrie)).toString());
+        lbShorterword.setText(currentTrie.getLeavesByLevel(findMinLevel(currentTrie)).toString());
+        
+//        lbLastWordAdded.setText(currentTrie.getLeaves().get(0));
     }
 
     private int findMinLevel(Trie trie) {
