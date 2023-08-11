@@ -19,7 +19,7 @@ import java.util.Stack;
  *
  * @author Grupo06
  */
-public class Trie implements Tree<String>,Serializable {
+public class Trie implements Tree<String>, Serializable {
 
     private TrieNode<String> root;
 
@@ -92,12 +92,12 @@ public class Trie implements Tree<String>,Serializable {
         for (int i = 0; i < word.length() - 1; i++) {
 
             Map<String, Trie> children = subTrie.root.getChildren();
-            subTrie = children.get(Character.toString(word.charAt(i)));
+            subTrie = children.get(Character.toString(word.toLowerCase().charAt(i)));
             if (subTrie == null) {
                 return false;
             }
         }
-        return subTrie.root.getChildren().get(word) != null;
+        return subTrie.root.getChildren().get(word.toLowerCase()) != null;
     }
 
     @Override
@@ -110,7 +110,7 @@ public class Trie implements Tree<String>,Serializable {
         }
         Trie current = this;
         for (int i = 0; i < word.length(); i++) {
-            String content = Character.toString(word.charAt(i));
+            String content = Character.toString(word.toLowerCase().charAt(i));
             Map<String, Trie> children = current.root.getChildren();
 
             if (children.get(content) == null) {
@@ -120,10 +120,10 @@ public class Trie implements Tree<String>,Serializable {
 
             if (i == (word.length() - 1)) {
                 if (!children.get(content).isLeaf()) {
-                    children.put(word, new Trie(word));
+                    children.put(word.toLowerCase(), new Trie(word.toLowerCase()));
                 } else {
                     children.remove(content);
-                    children.put(word, new Trie(word));
+                    children.put(word.toLowerCase(), new Trie(word.toLowerCase()));
                 }
             }
         }
@@ -134,14 +134,15 @@ public class Trie implements Tree<String>,Serializable {
 
     @Override
     public boolean remove(String leave) {
-        if (this.isEmpty() || !search(leave)) {
+        String leaveLowerCase = leave.toLowerCase();
+        if (this.isEmpty() || !search(leaveLowerCase)) {
             return false;
         }
         Trie currentTrie = this;
         String content = "";
 
-        for (int i = 0; i < leave.length() - 1; i++) {
-            content = Character.toString(leave.charAt(i));
+        for (int i = 0; i < leaveLowerCase.length() - 1; i++) {
+            content = Character.toString(leaveLowerCase.charAt(i));
             Map<String, Trie> children = currentTrie.root.getChildren();
             if (children.get(content).getLeaves().size() > 1) {
                 currentTrie = children.get(content);
@@ -150,8 +151,8 @@ public class Trie implements Tree<String>,Serializable {
             }
         }
 
-        if (currentTrie.root.getChildren().get(leave) != null) {
-            currentTrie.root.getChildren().remove(leave);
+        if (currentTrie.root.getChildren().get(leaveLowerCase) != null) {
+            currentTrie.root.getChildren().remove(leaveLowerCase);
             return true;
         } else {
             currentTrie.root.getChildren().remove(content);
@@ -166,7 +167,7 @@ public class Trie implements Tree<String>,Serializable {
         }
         Trie subTrie = this;
 
-        for (char ch : prefix.toCharArray()) {
+        for (char ch : prefix.toLowerCase().toCharArray()) {
             Map<String, Trie> children = subTrie.root.getChildren();
             subTrie = children.get(Character.toString(ch));
             if (subTrie == null) {
@@ -184,11 +185,11 @@ public class Trie implements Tree<String>,Serializable {
         List<String> similars = new LinkedList<>();
 
         for (String leave : leaves) {
-            if (Math.abs(leave.length() - word.length()) != 0) {
-                if (levenshteinAlgorithm(word, leave) < 3) {
-                    similars.add(leave);
-                }
+
+            if (!leave.equalsIgnoreCase(word) && levenshteinAlgorithm(word.toLowerCase(), leave.toLowerCase()) < 3) {
+                similars.add(leave);
             }
+
         }
         return similars;
     }
@@ -202,7 +203,7 @@ public class Trie implements Tree<String>,Serializable {
         List<String> wordsEndWithLetters = new LinkedList<>();
 
         for (String word : words) {
-            if (word.endsWith(letters)) {
+            if (!word.equalsIgnoreCase(letters) && word.endsWith(letters.toLowerCase())) {
                 wordsEndWithLetters.add(word);
             }
         }
@@ -241,7 +242,8 @@ public class Trie implements Tree<String>,Serializable {
         if (isEmpty()) {
             return null;
         } else if (isLeaf()) {
-            leaves.add(this.root.getContent());
+            String capitalizeWord = this.root.getContent().substring(0, 1).toUpperCase() + this.root.getContent().substring(1).toLowerCase();
+            leaves.add(capitalizeWord);
             return leaves;
         } else {
             Map<String, Trie> children = this.root.getChildren();
@@ -322,16 +324,16 @@ public class Trie implements Tree<String>,Serializable {
             return null;
 
         }
-        if (level == 0&& this.isLeaf()) {
+        if (level == 0 && this.isLeaf()) {
             list.add(this.root.getContent());
             return list;
         }
-        
-        for(Trie childTrie: this.getChildren().values()){
-            list.addAll(childTrie.getLeavesByLevel(level-1));
+
+        for (Trie childTrie : this.getChildren().values()) {
+            list.addAll(childTrie.getLeavesByLevel(level - 1));
         }
         return list;
-        
+
     }
 
     @Override
@@ -349,6 +351,5 @@ public class Trie implements Tree<String>,Serializable {
         return maxChildLevel;
 
     }
-
 
 }

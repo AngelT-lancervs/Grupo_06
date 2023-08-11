@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
@@ -15,13 +16,61 @@
    <children>
       <Pane layoutX="29.0" layoutY="79.0" prefHeight="343.0" prefWidth="383.0" style="-fx-border-color: black;">
          <children>
-            <ScrollPane layoutX="2.0" layoutY="2.0" prefHeight="338.0" prefWidth="378.0">
+            <ScrollPane prefHeight="343.0" prefWidth="383.0">
                <content>
-                  <VBox fx:id="vbContent" prefHeight="332.0" prefWidth="366.0" />
+                  <VBox fx:id="vbInfo" alignment="TOP_CENTER" prefHeight="366.0" prefWidth="366.0" visible="false">
+                     <children>
+                        <Label fx:id="lbNote" alignment="CENTER" contentDisplay="CENTER" prefHeight="53.0" prefWidth="161.0" text="EXITO!!" textFill="#6ab112">
+                           <font>
+                              <Font size="36.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="lbResult" lineSpacing="5.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="60.0" prefWidth="334.0" text="La palabra &quot;XD&quot;  se encuentra agregada dentro  de su diccionario" wrapText="true">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                        </Label>
+                        <Label alignment="CENTER" prefHeight="43.0" prefWidth="334.0" text="Tambien te puede interesar">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="lbSimilars" prefHeight="31.0" prefWidth="334.0" text="Palabras similares a &quot;XD&quot;:">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <VBox fx:id="vbSimilars" alignment="CENTER_LEFT" prefHeight="45.0" prefWidth="308.0">
+                           <padding>
+                              <Insets left="50.0" />
+                           </padding></VBox>
+                        <Label fx:id="lbPrefix" prefHeight="31.0" prefWidth="334.0" text="Palabras que inician con  &quot;XD&quot;:">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <VBox fx:id="vbPrefix" alignment="CENTER_LEFT" prefHeight="48.0" prefWidth="366.0">
+                           <padding>
+                              <Insets left="50.0" />
+                           </padding></VBox>
+                        <Label fx:id="lbReverse" prefHeight="31.0" prefWidth="334.0" text="Palabras que terminan con  &quot;XD&quot;:">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <VBox fx:id="vbReverse" alignment="CENTER_LEFT" prefHeight="48.0" prefWidth="366.0">
+                           <padding>
+                              <Insets left="50.0" />
+                           </padding></VBox>
+                     </children>
+                  </VBox>
                </content>
             </ScrollPane>
          </children></Pane>
-      <TextField fx:id="tfSearch" layoutX="456.0" layoutY="226.0" prefHeight="49.0" prefWidth="414.0" style="-fx-border-color: #393E46;" />
+      <TextField fx:id="tfSearch" layoutX="456.0" layoutY="226.0" onKeyPressed="#capitalize" onKeyReleased="#blockScape" prefHeight="49.0" prefWidth="414.0" style="-fx-border-color: #393E46;" />
       <ImageView id="closeHand" fitHeight="30.0" fitWidth="30.0" layoutX="821.0" layoutY="236.0" onMouseClicked="#searchWord" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../images/searchIcon.png" />
@@ -32,7 +81,7 @@
             <Font name="Berlin Sans FB Bold" size="36.0" />
          </font>
       </Label>
-      <Button id="buttonP" layoutX="509.0" layoutY="306.0" mnemonicParsing="false" onAction="#addWord" prefHeight="40.0" prefWidth="104.0" text="Agregar">
+      <Button id="buttonP" layoutX="509.0" layoutY="306.0" mnemonicParsing="false" onAction="#addWord" prefHeight="40.0" prefWidth="104.0" text="Añadir">
          <font>
             <Font name="Berlin Sans FB" size="12.0" />
          </font>

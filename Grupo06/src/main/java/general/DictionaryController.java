@@ -9,14 +9,21 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
+import javafx.scene.text.Font;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -29,19 +36,44 @@ import utils.trieSerialization;
 public class DictionaryController implements Initializable {
 
     @FXML
-    private VBox vbContent;
-    
+    private Label lbNote;
+
+    @FXML
+    private Label lbPrefix;
+
+    @FXML
+    private Label lbResult;
+
+    @FXML
+    private Label lbReverse;
+
+    @FXML
+    private Label lbSimilars;
+
+    @FXML
+    private VBox vbInfo;
+
+    @FXML
+    private VBox vbPrefix;
+
+    @FXML
+    private VBox vbReverse;
+
+    @FXML
+    private VBox vbSimilars;
+
     @FXML
     private TextField tfSearch;
-    
+
     public static Trie dictionary;
-    
+
     private AutoCompletionBinding<String> autoComplete;
-    
+
     private final Alertas alert = new Alertas();
-    
+
     private final FileChooser fc = new FileChooser();
 
+    //borrarrrrrrrr
     @FXML
     private void switchToSecondary() throws IOException {
         App.setRoot("secondary");
@@ -49,7 +81,7 @@ public class DictionaryController implements Initializable {
 
     @FXML
     private void closeWindow() {
-        trieSerialization.serialize(dictionary,"dictionary");
+        trieSerialization.serialize(dictionary, "dictionary");
         System.exit(0);
     }
 
@@ -120,6 +152,15 @@ public class DictionaryController implements Initializable {
 
     @FXML
     private void searchWord() {
+        String wordToSearch = tfSearch.getText();
+        if (wordToSearch.equals("")) {
+            alert.AlertError("Ingrese una palabra para buscar");
+        } else {
+            setResultComponents(dictionary.search(wordToSearch), wordToSearch);
+
+            vbInfo.setVisible(true);
+
+        }
 
     }
 
@@ -199,6 +240,83 @@ public class DictionaryController implements Initializable {
             System.out.println("Archivo escrito exitosamente.");
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    private void setResultComponents(boolean result, String wordToSearch) {
+        if (result) {
+
+            lbNote.setText("EXITO!");
+            lbNote.setTextFill(new Color(0.299, 0.7158, 0.2439, 1.0));
+            lbResult.setPrefHeight(60);
+            lbResult.setText("La palabra \"" + wordToSearch + "\"  se encuentra agregada dentro de su diccionario");
+        } else {
+            lbNote.setText("ERROR!");
+            lbNote.setTextFill(new Color(0.7368, 0.2129, 0.2129, 1.0));
+            lbResult.setPrefHeight(100);
+            lbResult.setText("La palabra \"" + wordToSearch + "\"  NO encuentra agregada dentro de su diccionario\n"
+                    + "De en el boton \"Añadir\" si desea guardar esta palabra");
+        }
+        updateSearchComponents(wordToSearch);
+    }
+
+    private void updateSearchComponents(String wordToSearch) {
+        lbSimilars.setText("Palabras similares a \"" + wordToSearch + "\":");
+        createVBoxList(vbSimilars, dictionary.searchSimilar(wordToSearch));
+        lbPrefix.setText("Palabras que inician con  \"" + wordToSearch + "\":");
+        createVBoxList(vbPrefix, dictionary.searchByPrefix(wordToSearch));
+        lbReverse.setText("Palabras que terminan con  \"" + wordToSearch + "\":");
+        createVBoxList(vbReverse, dictionary.searchReverse(wordToSearch));
+
+    }
+
+    private void createVBoxList(VBox searchVBox, List<String> searchList) {
+        searchVBox.getChildren().clear();
+        if (searchList == null || searchList.isEmpty()) {
+            Label withoutElements = new Label("No hay resultados");
+            withoutElements.setFont(new Font(14));
+            searchVBox.getChildren().add(withoutElements);
+        } else {
+            for (String word : searchList) {
+                Label wordLabel = new Label("• " + word);
+                wordLabel.setFont(new Font(14));
+                searchVBox.getChildren().add(wordLabel);
+
+            }
+        }
+
+    }
+
+    @FXML
+    void capitalize(KeyEvent event) {
+        String currentText = tfSearch.getText().trim();
+        if (currentText.length() == 1) {
+            tfSearch.setText(currentText.toUpperCase());
+            tfSearch.positionCaret(1);
+        }
+        if (currentText.equals("")) {
+            vbInfo.setVisible(false);
+        }
+        if (event.getCode() == KeyCode.ENTER) {
+            searchWord();
+        }
+        if (event.getCode() == KeyCode.SPACE) {
+            event.consume();
+//            tfSearch.setText(currentText);
+//            tfSearch.positionCaret(currentText.length());
+
+        }
+
+    }
+
+    @FXML
+    private void blockScape(KeyEvent event) {
+
+        if (event.getCode() == KeyCode.SPACE) {
+            event.consume();
+//            tfSearch.setText(currentText);
+//            tfSearch.positionCaret(currentText.length());
+
         }
     }
 }
