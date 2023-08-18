@@ -216,7 +216,9 @@ public class DictionaryController implements Initializable {
     }
 
     @FXML
-    void playGame() {
+    void playGame() throws IOException {
+        
+        App.setRoot("Game");
 
     }
 
