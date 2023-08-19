@@ -101,7 +101,7 @@ public class GameController implements Initializable {
     }
 
     @FXML
-    private void complete(KeyEvent event) {
+    private void complete(KeyEvent event) throws IOException {
         if (event.getCode() == KeyCode.ENTER) {
 
             check();
@@ -136,7 +136,7 @@ public class GameController implements Initializable {
 
     }
 
-    private void checkStatus() {
+    private void checkStatus() throws IOException {
         switch (numTry) {
             case 5:
                 this.ahorcadoView.setImage(new Image(getClass().getResourceAsStream("/images/ahorcado/2.png")));
@@ -154,7 +154,8 @@ public class GameController implements Initializable {
                 this.ahorcadoView.setImage(new Image(getClass().getResourceAsStream("/images/ahorcado/6.png")));
                 break;
             case 0:
-                alertHandler.AlertConfirmation("GAME OVER");
+                alertHandler.AlertInfo("Game Over");
+                App.setRoot("dictionary");
                 break;
         }
 
