@@ -8,22 +8,27 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="paneGame" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@../style/primary.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="general.GameController">
+<AnchorPane fx:id="paneGame" cache="true" cacheHint="SCALE" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="776.0" stylesheets="@../style/primary.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="general.GameController">
    <children>
-      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="122.0" layoutY="23.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="ahorcadoView" fitHeight="150.0" fitWidth="200.0" layoutX="293.0" layoutY="66.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../images/gameIcon.png" />
          </image>
       </ImageView>
-      <HBox fx:id="HBoxLabels" alignment="CENTER" layoutX="24.0" layoutY="200.0" prefHeight="100.0" prefWidth="552.0" spacing="30.0" />
-      <TextField fx:id="textField" layoutX="387.0" layoutY="86.0" onKeyReleased="#complete" prefHeight="41.0" prefWidth="147.0">
+      <HBox fx:id="HBoxLabels" alignment="CENTER" layoutX="23.0" layoutY="286.0" prefHeight="100.0" prefWidth="687.0" spacing="30.0" />
+      <TextField fx:id="textField" layoutX="559.0" layoutY="189.0" onKeyReleased="#complete" prefHeight="63.0" prefWidth="100.0">
          <font>
             <Font size="27.0" />
          </font>
       </TextField>
-      <Label fx:id="numTryLabel" layoutX="401.0" layoutY="37.0" prefHeight="31.0" prefWidth="60.0" text="0">
+      <Label fx:id="numTryLabel" layoutX="571.0" layoutY="141.0" prefHeight="31.0" prefWidth="60.0" text="0">
          <font>
             <Font name="System Italic" size="32.0" />
+         </font>
+      </Label>
+      <Label id="closeHand" fx:id="backButton" alignment="CENTER" contentDisplay="CENTER" layoutX="741.0" layoutY="14.0" onMouseClicked="#back" prefHeight="30.0" prefWidth="35.0" text="X">
+         <font>
+            <Font name="Berlin Sans FB Demi Bold" size="24.0" />
          </font>
       </Label>
    </children>

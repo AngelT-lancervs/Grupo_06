@@ -73,12 +73,6 @@ public class DictionaryController implements Initializable {
 
     private final FileChooser fc = new FileChooser();
 
-    //borrarrrrrrrr
-    @FXML
-    private void switchToSecondary() throws IOException {
-        App.setRoot("secondary");
-    }
-
     @FXML
     private void closeWindow() {
         trieSerialization.serialize(dictionary, "dictionary");
