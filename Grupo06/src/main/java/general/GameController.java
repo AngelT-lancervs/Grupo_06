@@ -58,7 +58,7 @@ public class GameController implements Initializable {
     private Label score;
     @FXML
     private Label highScoreLabel;
-    
+
     private int numScore = 0;
 
     private int numTry = 7;
@@ -72,7 +72,7 @@ public class GameController implements Initializable {
     private List<String> choosenWords = new ArrayList<>();
 
     private final Alertas alertHandler = new Alertas();
-    
+
     private int highScore = loadHighScore();
 
     /**
@@ -132,8 +132,8 @@ public class GameController implements Initializable {
             alertHandler.AlertInfo("Escriba un caracter");
             return;
         }
-        
-        if (letter.length() > 1){
+
+        if (letter.length() > 1) {
             alertHandler.AlertInfo("Escriba solo un caracter");
             this.textField.setText("");
             return;
@@ -160,6 +160,9 @@ public class GameController implements Initializable {
     private void checkStatus() throws IOException {
         switch (numTry) {
             case 6:
+                this.ahorcadoView.setImage(new Image(getClass().getResourceAsStream("/images/ahorcado/1.png")));
+                break;
+            case 5:
                 this.ahorcadoView.setImage(new Image(getClass().getResourceAsStream("/images/ahorcado/2.png")));
                 break;
             case 4:
@@ -175,7 +178,7 @@ public class GameController implements Initializable {
                 this.ahorcadoView.setImage(new Image(getClass().getResourceAsStream("/images/ahorcado/6.png")));
                 break;
             case 0:
-                if(this.numScore > this.highScore){
+                if (this.numScore > this.highScore) {
                     this.saveHighScore(this.numScore);
                 }
                 alertHandler.AlertInfo("Game Over");
@@ -240,24 +243,24 @@ public class GameController implements Initializable {
     private void back() throws IOException {
         App.setRoot("dictionary");
     }
-    
-    private void saveHighScore(int i){
-         try {
+
+    private void saveHighScore(int i) {
+        try {
             FileOutputStream fout = new FileOutputStream("userData/serialized/highscore.ser");
             ObjectOutputStream out = new ObjectOutputStream(fout);
             out.writeObject(i);
             out.flush();
 
         } catch (FileNotFoundException e) {
-             System.out.println("No hay archivo");
+            System.out.println("No hay archivo");
         } catch (IOException e) {
-             System.out.println("Problema con el saveHighScore");
-        } catch (Exception e){
+            System.out.println("Problema con el saveHighScore");
+        } catch (Exception e) {
             System.out.println(e);
         }
     }
-    
-    private int loadHighScore(){
+
+    private int loadHighScore() {
         try {
             FileInputStream file = new FileInputStream("userData/serialized/highscore.ser");
             ObjectInputStream in = new ObjectInputStream(file);
