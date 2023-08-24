@@ -1,0 +1,28 @@
+#labelAnswer{
+    -fx-border-width: 2px;
+    -fx-border-color: #232931;
+}
+
+#closeHand:hover{
+    -fx-cursor: hand;
+}
+
+.chart-bar {
+    -fx-bar-fill: #232931; /* Color de las barras */
+
+}
+
+/*.chart-bar-label {
+    -fx-font-size: 10px;
+    -fx-text-fill: #ffffff;  Color del texto de los valores 
+}
+
+.chart-category-label {
+    -fx-font-size: 12px;
+    -fx-text-fill: #333333;
+}
+
+.chart-title {
+    -fx-font-size: 16px;
+    -fx-text-fill: #232931;
+}*/

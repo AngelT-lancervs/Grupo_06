@@ -33,9 +33,3 @@
     -fx-background-radius: 20;
 }
 
-.label-with-bottom-border {
-    -fx-border-style: hidden hidden solid hidden;
-    -fx-border-width: 0 0 1 0;
-    -fx-border-color: black;
-}
-
