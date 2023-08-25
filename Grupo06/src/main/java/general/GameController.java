@@ -200,7 +200,6 @@ public class GameController implements Initializable {
         }
 
         if (win) {
-            System.out.println("win");
             this.numScore++;
             this.score.setText(Integer.toString(this.numScore));
             newWord();
@@ -208,7 +207,7 @@ public class GameController implements Initializable {
     }
 
     private void newWord() {
-        wait(200);
+        wait(100);
 
         getRandomWord();
         this.HBoxLabels.getChildren().clear();
