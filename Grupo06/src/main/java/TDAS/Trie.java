@@ -161,6 +161,22 @@ public class Trie implements Tree<String>, Serializable {
 
     }
 
+    @Override
+    public int countLevel() {
+        if (this.isEmpty()) {
+            return 0;
+        }
+
+        int maxChildLevel = 0;
+        for (Trie child : this.getChildren().values()) {
+            int childLevel = child.countLevel() + 1;
+            maxChildLevel = Math.max(maxChildLevel, childLevel);
+        }
+
+        return maxChildLevel;
+
+    }
+
     public List<String> searchByPrefix(String prefix) {
         if (!isValidWord(prefix) || this.isEmpty()) {
             return null;
@@ -288,10 +304,24 @@ public class Trie implements Tree<String>, Serializable {
         return word != null && !word.equals("") && !word.contains(" ");
     }
 
-//    @Override
-//    public String toString() {
-//        return "Trie{" + "root=" + root + ", leaves=" + getLeaves() + '}';
-//    }
+    public List<String> getLeavesByLevel(int level) {
+        List<String> list = new LinkedList<>();
+        if (this.isEmpty()) {
+            return null;
+
+        }
+        if (level == 0 && this.isLeaf()) {
+            list.add(this.root.getContent());
+            return list;
+        }
+
+        for (Trie childTrie : this.getChildren().values()) {
+            list.addAll(childTrie.getLeavesByLevel(level - 1));
+        }
+        return list;
+
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -316,40 +346,6 @@ public class Trie implements Tree<String>, Serializable {
         for (Trie childTrie : children.values()) {
             toStringRecursive(childTrie.root, sb, depth + 1);
         }
-    }
-
-    public List<String> getLeavesByLevel(int level) {
-        List<String> list = new LinkedList<>();
-        if (this.isEmpty()) {
-            return null;
-
-        }
-        if (level == 0 && this.isLeaf()) {
-            list.add(this.root.getContent());
-            return list;
-        }
-
-        for (Trie childTrie : this.getChildren().values()) {
-            list.addAll(childTrie.getLeavesByLevel(level - 1));
-        }
-        return list;
-
-    }
-
-    @Override
-    public int countLevel() {
-        if (this.isEmpty()) {
-            return 0;
-        }
-
-        int maxChildLevel = 0;
-        for (Trie child : this.getChildren().values()) {
-            int childLevel = child.countLevel() + 1;
-            maxChildLevel = Math.max(maxChildLevel, childLevel);
-        }
-
-        return maxChildLevel;
-
     }
 
 }
