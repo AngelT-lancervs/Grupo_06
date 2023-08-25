@@ -22,7 +22,6 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
@@ -146,16 +145,16 @@ public class DictionaryController implements Initializable {
 
     @FXML
     private void searchWord() {
-        String wordToSearch = tfSearch.getText();
+        String wordToSearch = tfSearch.getText().trim();
         if (wordToSearch.equals("")) {
             alert.AlertError("Ingrese una palabra para buscar");
+        }
+        if (wordToSearch.contains(" ")) {
+            alert.AlertError("Ingrese solo UNA palabra");
         } else {
             setResultComponents(dictionary.search(wordToSearch), wordToSearch);
-
             vbInfo.setVisible(true);
-
         }
-
     }
 
     @FXML
@@ -211,7 +210,7 @@ public class DictionaryController implements Initializable {
 
     @FXML
     void playGame() throws IOException {
-        
+
         App.setRoot("Game");
 
     }
@@ -293,25 +292,20 @@ public class DictionaryController implements Initializable {
         if (currentText.equals("")) {
             vbInfo.setVisible(false);
         }
-        if (event.getCode() == KeyCode.ENTER) {
-            searchWord();
-        }
-        if (event.getCode() == KeyCode.SPACE) {
-            event.consume();
-//            tfSearch.setText(currentText);
-//            tfSearch.positionCaret(currentText.length());
-
-        }
 
     }
 
     @FXML
-    private void blockScape(KeyEvent event) {
+    private void keyboardShortcuts(KeyEvent event) {
+        String textWithoutSpaces = tfSearch.getText().trim();
+        int wordSize = textWithoutSpaces.length();
 
+        if (event.getCode() == KeyCode.ENTER) {
+            searchWord();
+        }
         if (event.getCode() == KeyCode.SPACE) {
-            event.consume();
-//            tfSearch.setText(currentText);
-//            tfSearch.positionCaret(currentText.length());
+            tfSearch.setText(textWithoutSpaces);
+            tfSearch.positionCaret(wordSize);
 
         }
     }
