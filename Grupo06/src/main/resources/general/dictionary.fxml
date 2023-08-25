@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="900.0" style="-fx-background-color: #EEEEEE;" stylesheets="@../style/primary.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="general.DictionaryController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="900.0" style="-fx-background-color: #EEEEEE;" stylesheets="@../style/primary.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="general.DictionaryController">
    <children>
       <Pane layoutX="492.0" layoutY="80.0" prefHeight="343.0" prefWidth="383.0">
          <children>
@@ -73,7 +73,7 @@
                </content>
             </ScrollPane>
          </children></Pane>
-      <TextField fx:id="tfSearch" layoutX="34.0" layoutY="226.0" onKeyPressed="#capitalize" onKeyReleased="#blockScape" prefHeight="49.0" prefWidth="414.0" style="-fx-border-color: #393E46;" />
+      <TextField fx:id="tfSearch" layoutX="34.0" layoutY="226.0" onKeyPressed="#keyboardShortcuts" onKeyTyped="#capitalize" prefHeight="49.0" prefWidth="414.0" style="-fx-border-color: #393E46;" />
       <ImageView id="closeHand" fitHeight="30.0" fitWidth="30.0" layoutX="399.0" layoutY="236.0" onMouseClicked="#searchWord" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../images/searchIcon.png" />

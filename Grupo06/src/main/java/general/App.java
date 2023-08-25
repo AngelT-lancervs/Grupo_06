@@ -15,9 +15,7 @@ import utils.trieSerialization;
  * JavaFX App
  */
 public class App extends Application {
-
     private static Scene scene;
-
     @Override
     public void start(Stage stage) throws IOException {
         scene = new Scene(loadFXML("dictionary"), 900, 500);
@@ -34,16 +32,13 @@ public class App extends Application {
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml + ".fxml"));
         return fxmlLoader.load();
     }
-
     public static void main(String[] args) {
         if (trieSerialization.unserialize("dictionary") == null) {
             DictionaryController.dictionary = createDefaultDictionary();
         }else{
             DictionaryController.dictionary= (Trie) trieSerialization.unserialize("dictionary");
         }
-
         launch();
-
     }
 
     private static Trie createDefaultDictionary() {
