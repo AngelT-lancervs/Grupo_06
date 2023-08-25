@@ -15,7 +15,7 @@
    <children>
       <VBox alignment="TOP_CENTER" prefHeight="455.0" prefWidth="699.0">
          <children>
-            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="53.0" prefWidth="128.0" text="Statistics">
+            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="53.0" prefWidth="128.0" text="Estadísticas">
                <font>
                   <Font name="Berlin Sans FB" size="24.0" />
                </font></Label>

@@ -33,3 +33,12 @@
     -fx-background-radius: 20;
 }
 
+.label {
+    -fx-text-fill:  black;
+    -fx-text-style: bold;
+}
+
+#titulo {
+    -fx-text-fill:  #232931;
+    -fx-text-style: bold;
+}

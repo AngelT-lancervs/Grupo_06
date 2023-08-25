@@ -1,0 +1,26 @@
+.text-field {
+    -fx-border-color:  black;
+    -fx-border-radius: 40;
+    -fx-background-color: transparent;
+}
+
+#miHBox {
+    -fx-background-image: url('barra.png');
+    -fx-background-size: cover;
+    -fx-background-repeat: no-repeat;
+}
+
+#closeHand:hover{
+    -fx-cursor: hand;
+}
+
+.label {
+    -fx-text-fill:  black;
+    -fx-text-style: bold;
+}
+
+.label-with-bottom-border {
+    -fx-border-style: hidden hidden solid hidden;
+    -fx-border-width: 0 0 1 0;
+    -fx-border-color: black;
+}

@@ -16,18 +16,18 @@
    <children>
       <Pane layoutX="492.0" layoutY="80.0" prefHeight="343.0" prefWidth="383.0">
          <children>
-            <ScrollPane prefHeight="343.0" prefWidth="383.0">
+            <ScrollPane hbarPolicy="NEVER" prefHeight="343.0" prefWidth="383.0" style="-fx-border-color: gray; -fx-border-width: 5;">
                <content>
                   <VBox fx:id="vbInfo" alignment="TOP_CENTER" prefHeight="366.0" prefWidth="366.0" visible="false">
                      <children>
                         <Label fx:id="lbNote" alignment="CENTER" contentDisplay="CENTER" prefHeight="53.0" prefWidth="161.0" text="EXITO!!" textFill="#6ab112">
                            <font>
-                              <Font size="36.0" />
+                              <Font name="Berlin Sans FB" size="36.0" />
                            </font>
                         </Label>
                         <Label fx:id="lbResult" lineSpacing="5.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="60.0" prefWidth="334.0" text="La palabra &quot;XD&quot;  se encuentra agregada dentro  de su diccionario" wrapText="true">
                            <font>
-                              <Font size="14.0" />
+                              <Font name="Berlin Sans FB" size="14.0" />
                            </font>
                            <opaqueInsets>
                               <Insets />
@@ -35,12 +35,12 @@
                         </Label>
                         <Label alignment="CENTER" prefHeight="43.0" prefWidth="334.0" text="Tambien te puede interesar">
                            <font>
-                              <Font size="14.0" />
+                              <Font name="Berlin Sans FB" size="14.0" />
                            </font>
                         </Label>
                         <Label fx:id="lbSimilars" prefHeight="31.0" prefWidth="334.0" text="Palabras similares a &quot;XD&quot;:">
                            <font>
-                              <Font size="14.0" />
+                              <Font name="Berlin Sans FB" size="14.0" />
                            </font>
                         </Label>
                         <VBox fx:id="vbSimilars" alignment="CENTER_LEFT" prefHeight="45.0" prefWidth="308.0">
@@ -50,7 +50,7 @@
                         </VBox>
                         <Label fx:id="lbPrefix" prefHeight="31.0" prefWidth="334.0" text="Palabras que inician con  &quot;XD&quot;:">
                            <font>
-                              <Font size="14.0" />
+                              <Font name="Berlin Sans FB" size="14.0" />
                            </font>
                         </Label>
                         <VBox fx:id="vbPrefix" alignment="CENTER_LEFT" prefHeight="48.0" prefWidth="366.0">
@@ -60,7 +60,7 @@
                         </VBox>
                         <Label fx:id="lbReverse" prefHeight="31.0" prefWidth="334.0" text="Palabras que terminan con  &quot;XD&quot;:">
                            <font>
-                              <Font size="14.0" />
+                              <Font name="Berlin Sans FB" size="14.0" />
                            </font>
                         </Label>
                         <VBox fx:id="vbReverse" alignment="CENTER_LEFT" prefHeight="48.0" prefWidth="366.0">
@@ -79,17 +79,17 @@
             <Image url="@../images/searchIcon.png" />
          </image>
       </ImageView>
-      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="34.0" layoutY="149.0" prefHeight="49.0" prefWidth="414.0" text="WordSearch" textFill="#232931">
+      <Label id="titulo" alignment="CENTER" contentDisplay="CENTER" layoutX="34.0" layoutY="149.0" prefHeight="49.0" prefWidth="414.0" text="WordSearch" textFill="#232931">
          <font>
             <Font name="Berlin Sans FB Bold" size="36.0" />
          </font>
       </Label>
-      <Button id="buttonP" layoutX="87.0" layoutY="306.0" mnemonicParsing="false" onAction="#addWord" prefHeight="40.0" prefWidth="104.0" text="Añadir">
+      <Button id="buttonP" layoutX="87.0" layoutY="306.0" mnemonicParsing="false" onAction="#addWord" prefHeight="40.0" prefWidth="104.0" text="Add">
          <font>
             <Font name="Berlin Sans FB" size="12.0" />
          </font>
       </Button>
-      <Button id="buttonP" layoutX="292.0" layoutY="306.0" mnemonicParsing="false" onAction="#deleteWord" prefHeight="40.0" prefWidth="104.0" text="Eliminar">
+      <Button id="buttonP" layoutX="292.0" layoutY="306.0" mnemonicParsing="false" onAction="#deleteWord" prefHeight="40.0" prefWidth="104.0" text="Remove">
          <font>
             <Font name="Berlin Sans FB" size="12.0" />
          </font>
