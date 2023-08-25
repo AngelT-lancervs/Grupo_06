@@ -6,14 +6,10 @@ package TDAS;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Queue;
 import java.util.Set;
-import java.util.Stack;
 
 /**
  *
@@ -40,7 +36,7 @@ public class Trie implements Tree<String>, Serializable {
     public boolean isLeaf() {
         return this.root.getChildren().isEmpty();
     }
-
+//cambiar
     public Map<String, Trie> getChildren() {
         return root.getChildren();
     }
@@ -88,9 +84,7 @@ public class Trie implements Tree<String>, Serializable {
             return false;
         }
         Trie subTrie = this;
-
         for (int i = 0; i < word.length() - 1; i++) {
-
             Map<String, Trie> children = subTrie.root.getChildren();
             subTrie = children.get(Character.toString(word.toLowerCase().charAt(i)));
             if (subTrie == null) {
@@ -166,15 +160,12 @@ public class Trie implements Tree<String>, Serializable {
         if (this.isEmpty()) {
             return 0;
         }
-
         int maxChildLevel = 0;
         for (Trie child : this.getChildren().values()) {
             int childLevel = child.countLevel() + 1;
             maxChildLevel = Math.max(maxChildLevel, childLevel);
         }
-
         return maxChildLevel;
-
     }
 
     public List<String> searchByPrefix(String prefix) {
@@ -182,7 +173,6 @@ public class Trie implements Tree<String>, Serializable {
             return null;
         }
         Trie subTrie = this;
-
         for (char ch : prefix.toLowerCase().toCharArray()) {
             Map<String, Trie> children = subTrie.root.getChildren();
             subTrie = children.get(Character.toString(ch));
@@ -198,10 +188,9 @@ public class Trie implements Tree<String>, Serializable {
             return null;
         }
         List<String> leaves = this.getLeaves();
-        List<String> similars = new LinkedList<>();
+        List<String> similars = new ArrayList<>();
 
         for (String leave : leaves) {
-
             if (!leave.equalsIgnoreCase(word) && levenshteinAlgorithm(word.toLowerCase(), leave.toLowerCase()) < 3) {
                 similars.add(leave);
             }
@@ -210,14 +199,15 @@ public class Trie implements Tree<String>, Serializable {
         return similars;
     }
 
-    //Revisar este metodo ya que no se si esto sea legal
+    
     public List<String> searchReverse(String letters) {
         if (!isValidWord(letters) || this.isEmpty()) {
             return null;
         }
+        
         List<String> words = getLeaves();
         List<String> wordsEndWithLetters = new LinkedList<>();
-
+        
         for (String word : words) {
             if (!word.equalsIgnoreCase(letters) && word.endsWith(letters.toLowerCase())) {
                 wordsEndWithLetters.add(word);
@@ -232,16 +222,13 @@ public class Trie implements Tree<String>, Serializable {
         int n = word2.length();
 
         int[][] dp = new int[m + 1][n + 1];
-
         // Casos base: inicialización de la primera fila y la primera columna
         for (int i = 0; i <= m; i++) {
             dp[i][0] = i;
         }
-
         for (int j = 0; j <= n; j++) {
             dp[0][j] = j;
         }
-
         // Cálculo de la distancia de edición usando programación dinámica
         for (int i = 1; i <= m; i++) {
             for (int j = 1; j <= n; j++) {
@@ -249,7 +236,6 @@ public class Trie implements Tree<String>, Serializable {
                 dp[i][j] = Math.min(Math.min(dp[i - 1][j] + 1, dp[i][j - 1] + 1), dp[i - 1][j - 1] + cost);
             }
         }
-
         return dp[m][n];
     }
 
@@ -287,12 +273,10 @@ public class Trie implements Tree<String>, Serializable {
         }
         if (this.isLeaf()) {
             list.add(i);
-
             return list;
         }
         Map<String, Trie> children = this.root.getChildren();
         Set<String> keys = children.keySet();
-
         for (String key : keys) {
             list.addAll(children.get(key).getAllLeavesLevelsRecursive(i + 1));
         }
@@ -308,13 +292,11 @@ public class Trie implements Tree<String>, Serializable {
         List<String> list = new LinkedList<>();
         if (this.isEmpty()) {
             return null;
-
         }
         if (level == 0 && this.isLeaf()) {
             list.add(this.root.getContent());
             return list;
         }
-
         for (Trie childTrie : this.getChildren().values()) {
             list.addAll(childTrie.getLeavesByLevel(level - 1));
         }
@@ -333,11 +315,9 @@ public class Trie implements Tree<String>, Serializable {
         if (node == null) {
             return;
         }
-
         for (int i = 0; i < depth; i++) {
             sb.append("  ");
         }
-
         sb.append("|-- ");
         sb.append(node.getContent());
         sb.append("\n");

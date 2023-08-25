@@ -113,7 +113,6 @@ public class DictionaryController implements Initializable {
             alert.AlertError("Por favor, ingrese una palabra valida");
         } else if (dictionary.search(currentWord)) {
             alert.AlertWarning("La palabra '" + currentWord + "' ya existe en el diccionario");
-
         } else if (alert.AlertConfirmation("Esta seguro de que desea agregar '" + currentWord + "' al diccionario")) {
             dictionary.add(currentWord);
             if (autoComplete != null) {
@@ -160,7 +159,6 @@ public class DictionaryController implements Initializable {
     @FXML
     void uploadWords() {
         FileChooser.ExtensionFilter txtFilter = new FileChooser.ExtensionFilter("Archivo txt", "*.txt");
-
         fc.getExtensionFilters().addAll(txtFilter);
 
         File file = fc.showOpenDialog(new Stage());
@@ -222,7 +220,6 @@ public class DictionaryController implements Initializable {
                 if (!dictionary.search(linea)) {
                     dictionary.add(linea);
                 }
-                System.out.println(linea);
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -232,7 +229,6 @@ public class DictionaryController implements Initializable {
     private void writteFile(String path, String toWritte) {
         try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(path, true))) {
             bufferedWriter.write(toWritte + "\n");
-            System.out.println("Archivo escrito exitosamente.");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -249,7 +245,7 @@ public class DictionaryController implements Initializable {
             lbNote.setText("ERROR!");
             lbNote.setTextFill(new Color(0.7368, 0.2129, 0.2129, 1.0));
             lbResult.setPrefHeight(100);
-            lbResult.setText("La palabra \"" + wordToSearch + "\"  NO encuentra agregada dentro de su diccionario\n"
+            lbResult.setText("La palabra \"" + wordToSearch + "\"  NO se encuentra agregada dentro de su diccionario\n"
                     + "De en el boton \"Añadir\" si desea guardar esta palabra");
         }
         updateSearchComponents(wordToSearch);

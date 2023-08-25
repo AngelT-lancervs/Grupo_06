@@ -44,17 +44,29 @@ public class App extends Application {
     private static Trie createDefaultDictionary() {
         Trie arbol = new Trie();
 
-        arbol.add("ESPOL");
+        arbol.add("Espol");
         arbol.add("estructura");
         arbol.add("datos");
-        arbol.add("exes");
         arbol.add("árbol");
         arbol.add("diccionario");
         arbol.add("hermana");
-        arbol.add("de");
+        arbol.add("Gonzalo");
+        arbol.add("metadato");
+        arbol.add("megadato");
+        arbol.add("carro");
         arbol.add("gorra");
         arbol.add("atención");
         arbol.add("plena");
+        arbol.add("zoom");
+        arbol.add("mesa");
+        arbol.add("mes");
+        arbol.add("tela");
+        arbol.add("telegrafo");
+        arbol.add("tele");
+        arbol.add("televisión");
+        arbol.add("gatos");
+        arbol.add("novia");
+        arbol.add("falta");
 
         return arbol;
 

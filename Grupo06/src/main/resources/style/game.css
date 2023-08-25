@@ -24,3 +24,8 @@
     -fx-border-width: 0 0 1 0;
     -fx-border-color: black;
 }
+
+#numero {
+    -fx-text-fill:  red;
+    -fx-text-style: bold;
+}

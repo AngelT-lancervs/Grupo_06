@@ -4,21 +4,20 @@
  */
 package general;
 
-import TDAS.Trie;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.URL;
-import java.text.Collator;
 import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 import java.util.ResourceBundle;
+
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
@@ -27,23 +26,19 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
-
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Border;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Font;
+import javafx.util.Duration;
 import utils.Alertas;
 
 /**
  * FXML Controller class
  *
- * @author lancervs
+ * @author Grupo_06
  */
 public class GameController implements Initializable {
 
-    @FXML
-    private AnchorPane paneGame;
     @FXML
     private HBox HBoxLabels;
     @FXML
@@ -51,13 +46,13 @@ public class GameController implements Initializable {
     @FXML
     private Label numTryLabel;
     @FXML
-    private Label backButton;
-    @FXML
     private ImageView ahorcadoView;
     @FXML
     private Label score;
     @FXML
     private Label highScoreLabel;
+    @FXML
+    private Label lbCronometro;
 
     private int numScore = 0;
 
@@ -74,13 +69,16 @@ public class GameController implements Initializable {
     private final Alertas alertHandler = new Alertas();
 
     private int highScore = loadHighScore();
-
-    /**
-     * Initializes the controller class.
-     */
+    
+    int minutos =0;
+    int segundos =10;
+    Timeline cronometro;
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         getRandomWord();
+        
+        iniciarCronometro(lbCronometro,alertHandler);
         this.numTryLabel.setText(Integer.toString(this.numTry));
         this.highScoreLabel.setText(Integer.toString(this.highScore));
 
@@ -93,6 +91,32 @@ public class GameController implements Initializable {
 
         Label label = (Label) this.HBoxLabels.getChildren().get(0);
         label.setText(Character.toString(word.charAt(0)).toUpperCase());
+    }
+    
+
+        public void iniciarCronometro(Label lb,Alertas alert) {
+        cronometro = new Timeline(new KeyFrame(Duration.seconds(1), h -> {
+            segundos--;
+
+            lb.setText((minutos <= 9 ? "0" : "") + minutos + ":" + (segundos <= 9 ? "0" : "") + segundos);
+            if (segundos == 00) {
+                minutos--;
+                segundos = 59;
+
+            }
+            if(segundos==0 && minutos ==0){
+                alert.AlertInfo("Game Over");
+                try {
+                    App.setRoot("dictionary");
+                } catch (IOException ex) {
+                    System.out.println("error");
+                }
+            }
+
+        }));
+
+        cronometro.setCycleCount(Timeline.INDEFINITE);
+        cronometro.play();
     }
 
     private int getRandomNumber(int max) {
@@ -118,7 +142,6 @@ public class GameController implements Initializable {
     @FXML
     private void complete(KeyEvent event) throws IOException {
         if (event.getCode() == KeyCode.ENTER) {
-
             check();
             checkWin();
             checkStatus();
@@ -208,7 +231,6 @@ public class GameController implements Initializable {
 
     private void newWord() {
         wait(100);
-
         getRandomWord();
         this.HBoxLabels.getChildren().clear();
 
@@ -226,7 +248,6 @@ public class GameController implements Initializable {
     private static String cleanString(String texto) {
         String texto1 = Normalizer.normalize(texto, Normalizer.Form.NFD);
         texto1 = texto1.replaceAll("[\\p{InCombiningDiacriticalMarks}]", "");
-        System.out.println(texto1);
         return texto1;
     }
 
